@@ -251,6 +251,6 @@ module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
 
-  homebridge.registerAccessory("homebridge-mysmartblinds", "MySmartBlinds", MySmartBlindsBridgeAccessory);
+  homebridge.registerAccessory("homebridge-mysmartblinds-accessory", "MySmartBlindsAccessory", MySmartBlindsBridgeAccessory);
   homebridge.registerPlatform('homebridge-mysmartblinds-bridge', 'MySmartBlindsBridge', MySmartBlindsBridge);
 };
