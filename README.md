@@ -1,4 +1,6 @@
 # homebridge-mysmartblinds-bridge
+[![NPM Version](https://img.shields.io/npm/v/homebridge-mysmartblinds-bridge.svg)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
+
 [Homebridge](https://github.com/nfarina/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub). You must have configured your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
 
 USE AT YOUR OWN RISK.
