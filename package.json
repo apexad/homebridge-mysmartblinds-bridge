@@ -1,6 +1,6 @@
 {
   "name": "homebridge-mysmartblinds-bridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "homebrige plugin for mysmartblinds",
   "keywords": [
     "homebridge-plugin"
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "auth0": "^2.20.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "request": "^2.88.0",
     "request-promise": "^4.2.5"
