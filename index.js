@@ -111,13 +111,13 @@ MySmartBlindsBridge.prototype = {
                   rp(blind_options)
                   .then(function (parsedBody) {
                     const blindState = parsedBody.data.blindsState[0];
-                    const homeKitBlindPercent = parseInt(blindState.position);
+                    const homeKitBlindPosition = parseInt(blindState.position);
                     var accessory = new MySmartBlindsBridgeAccessory(platform.log,platform.config,
                       {
                       name: `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`,
                       encodedMacAddress: blind.encodedMacAddress,
-                      blindPercent: homeKitBlindPercent,
-                      batteryPercent: blindState.batteryLevel
+                      blindPosition: homeKitBlindPosition,
+                      batteryLevel: blindState.batteryLevel
                     });
                     foundBlinds.push(accessory);
                   })
@@ -125,7 +125,6 @@ MySmartBlindsBridge.prototype = {
               }
             })
             Promise.all(blindPromise).then(() => {
-              console.log('Found Binds', foundBlinds)
               callback(foundBlinds);
             });
           })
@@ -143,10 +142,10 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.config = config;
   this.name = blind.name;
   this.encodedMacAddress = blind.encodedMacAddress;
-  this.blindPercent = blind.blindPercent;
-  this.batteryPercent = blind.batteryPercent
-  this.currentPosition = 0;
-	this.targetPosition = 0;
+  this.blindPosition = blind.blindPosition;
+  this.batteryLevel = blind.batteryLevel;
+  this.currentPosition = this.blindPosition;
+	this.targetPosition = this.blindPosition;
 	
 	this.positionState = Characteristic.PositionState.STOPPED;
 }
@@ -188,7 +187,8 @@ MySmartBlindsBridgeAccessory.prototype = {
       }
     };
     rp(options)
-    .then(function () {
+    .then(function (parsedBody) {
+      thisBlind.batteryLevel = parsedBody.data.updateBlindsPosition[0].batteryLevel;
       thisBlind.currentPosition = thisBlind.targetPosition;
 			thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
 			thisBlind.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
@@ -199,7 +199,10 @@ MySmartBlindsBridgeAccessory.prototype = {
   getPositionState: function(callback) {
 		this.log("getPositionState :", this.positionState);
 		callback(null, this.positionState);
-	},
+  },
+  getBatteryLevel: function(callback) {
+    callback(null, parseFloat(this.batteryLevel));
+  },
   getServices: function() {
     var services = []
     
@@ -218,6 +221,13 @@ MySmartBlindsBridgeAccessory.prototype = {
 		.on('get', this.getPositionState.bind(this));
 
     services.push(this.service);
+
+    var batteryService  = new Service.BatteryService(this.name);
+    batteryService.getCharacteristic(Characteristic.BatteryLevel)
+    .setProps({ maxValue: 100, minValue: 0, minStep: 1 })
+    .on('get', this.getBatteryLevel.bind(this));
+
+    services.push(batteryService);
 
     var service = new Service.AccessoryInformation();
 
