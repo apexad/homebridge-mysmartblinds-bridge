@@ -1,0 +1,30 @@
+{
+  "name": "homebridge-mysmartblinds-bridge",
+  "version": "1.0.0",
+  "description": "homebrige plugin for mysmartblinds",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.5"
+  },
+  "dependencies": {
+    "auth0": "^2.20.0",
+    "lodash": "^4.17.15",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Alex 'apexad' Martin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/apexad/homebridge-mysmartblinds-bridge.git"
+  },
+  "license": "MIT"
+}
