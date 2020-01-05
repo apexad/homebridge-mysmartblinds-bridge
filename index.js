@@ -231,7 +231,7 @@ MySmartBlindsBridgeAccessory.prototype = {
   },
   getServices: function() {
     const services = []
-    
+
     this.service = new Service.WindowCovering(this.name);
 
     this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', function(callback) {
