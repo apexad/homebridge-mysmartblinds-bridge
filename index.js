@@ -1,7 +1,8 @@
 const auth0 = require('auth0');
 const rp = require('request-promise');
 const _ = require('lodash');
-var auth0Token;
+const jwt = require('jsonwebtoken');
+let auth0Token, auth0TokenInterval;
 
 const smartblinds_auth = {
   domain: 'mysmartblinds.auth0.com',
@@ -31,7 +32,7 @@ function MySmartBlindsBridge(log, config) {
 MySmartBlindsBridge.prototype = {
   accessories: function(callback) {
     this.log('Looking for blinds...');
-    var platform = this;
+    const platform = this;
     const foundBlinds = [];
 
     const authenticationClient = new auth0.AuthenticationClient(
@@ -48,6 +49,9 @@ MySmartBlindsBridge.prototype = {
           platform.log(err);
         } else {
           auth0Token = authResult.id_token;
+
+          // Auth Token will expire in about 10 hours, so to beat that, refresh it every 8 hours
+          auth0TokenInterval = setInterval(platform.refreshAuthToken, 1000*60*60*8);
           const options = {
             method: 'POST',
             uri: smartblindsGraphQL,
@@ -81,7 +85,7 @@ MySmartBlindsBridge.prototype = {
             const {
               rooms,
               blinds,
-            }= parsedBody.data.user;
+            } = parsedBody.data.user;
 
             const blindPromise = [];
             blinds.forEach((blind) => {
@@ -112,7 +116,7 @@ MySmartBlindsBridge.prototype = {
                   .then(function (parsedBody) {
                     const blindState = parsedBody.data.blindsState[0];
                     const homeKitBlindPosition = parseInt(blindState.position);
-                    var accessory = new MySmartBlindsBridgeAccessory(platform.log,platform.config,
+                    const accessory = new MySmartBlindsBridgeAccessory(platform.log,platform.config,
                       {
                       name: `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`,
                       encodedMacAddress: blind.encodedMacAddress,
@@ -134,6 +138,28 @@ MySmartBlindsBridge.prototype = {
         }
       }
     )
+  },
+  refreshAuthToken: function() {
+    const platform = this;
+    const authenticationClient = new auth0.AuthenticationClient(
+      smartblinds_auth
+    );
+    authenticationClient.database.signIn(
+      Object.assign(
+        {},
+        smartblinds_options,
+        { username: platform.username, password: platform.password }
+      ),
+      function(err, authResult) {
+        if (err) {
+          platform.log(err);
+        } else {
+          auth0Token = authResult.id_token;
+          const auth0TokenExpireDate = new Date(jwt.decode(authResult.id_token).exp * 1000).toISOString()
+          platform.log(`auth0Token refresh, now expires ${auth0TokenExpireDate}`);
+        }
+      }
+    );
   }
 }
 
@@ -204,7 +230,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     callback(null, parseFloat(this.batteryLevel));
   },
   getServices: function() {
-    var services = []
+    const services = []
     
     this.service = new Service.WindowCovering(this.name);
 
@@ -222,14 +248,14 @@ MySmartBlindsBridgeAccessory.prototype = {
 
     services.push(this.service);
 
-    var batteryService  = new Service.BatteryService(this.name);
+    const batteryService  = new Service.BatteryService(this.name);
     batteryService.getCharacteristic(Characteristic.BatteryLevel)
     .setProps({ maxValue: 100, minValue: 0, minStep: 1 })
     .on('get', this.getBatteryLevel.bind(this));
 
     services.push(batteryService);
 
-    var service = new Service.AccessoryInformation();
+    const service = new Service.AccessoryInformation();
 
     service.setCharacteristic(Characteristic.Manufacturer, "MySmartBlinds")
     .setCharacteristic(Characteristic.Name, this.name)
@@ -245,7 +271,7 @@ MySmartBlindsBridgeAccessory.prototype = {
 module.exports.accessory = MySmartBlindsBridgeAccessory;
 module.exports.platform = MySmartBlindsBridge;
 
-var Service, Characteristic;
+let Service, Characteristic;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
