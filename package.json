@@ -3,7 +3,8 @@
   "version": "1.0.1",
   "description": "homebrige plugin for mysmartblinds",
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "mysmartblinds"
   ],
   "engines": {
     "node": ">=0.12.0",
