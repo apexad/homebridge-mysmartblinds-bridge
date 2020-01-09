@@ -1,0 +1,31 @@
+{
+  "plugin_alias": "MySmartBlindsBridge",
+  "schema": {
+      "type": "object",
+      "properties": {
+          "platform": {
+              "title": "Platform",
+              "type": "string",
+              "const": "MySmartBlindsBridge",
+              "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "const": "MySmartBlindsBridge",
+            "readOnly": true
+        },
+        "username": {
+            "title": "Username",
+            "type": "string"
+        },
+        "password": {
+            "title": "Password",
+            "type": "string",
+            "options": {
+                "hidden": true
+            }
+        }
+      }
+  }
+}
