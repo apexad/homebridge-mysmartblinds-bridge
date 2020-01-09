@@ -4,7 +4,9 @@
   "description": "homebrige plugin for mysmartblinds",
   "keywords": [
     "homebridge-plugin",
-    "mysmartblinds"
+    "mysmartblinds",
+    "category-hubs",
+    "category-climate"
   ],
   "engines": {
     "node": ">=0.12.0",
