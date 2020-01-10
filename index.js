@@ -218,6 +218,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     };
     rp(options)
       .then(function (parsedBody) {
+        // update battery level since we jusr ran the motor a bit
         thisBlind.batteryLevel = parsedBody.data.updateBlindsPosition[0].batteryLevel;
         thisBlind.currentPosition = thisBlind.targetPosition;
         thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
@@ -231,7 +232,16 @@ MySmartBlindsBridgeAccessory.prototype = {
     callback(null, this.positionState);
   },
   getBatteryLevel: function (callback) {
+    // using cached battery level, rather than fetching actual level, updated after target position changed
     callback(null, parseFloat(this.batteryLevel));
+  },
+  getStatusLowBattery: function (callback) {
+    callback(
+      null,
+      this.batteryLevel < 50
+        ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW
+        : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL
+    )
   },
   getServices: function () {
     const services = []
@@ -256,6 +266,9 @@ MySmartBlindsBridgeAccessory.prototype = {
     batteryService.getCharacteristic(Characteristic.BatteryLevel)
       .setProps({ maxValue: 100, minValue: 0, minStep: 1 })
       .on('get', this.getBatteryLevel.bind(this));
+
+    batteryService.getCharacteristic(Characteristic.StatusLowBattery)
+    .on('get', this.getStatusLowBattery.bind(this))
 
     services.push(batteryService);
 
