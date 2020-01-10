@@ -6,7 +6,7 @@
 This plugin is not affilited with the MySmartBlinds product.
 
 ## features
-1. Uses bride to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
+1. Uses bridge to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
 2. Supports blind percentages
 3. Shows battery level for each blind (updated only when blind is open/closed)
 4. Issues a low battery indicator if battery is below 20%
