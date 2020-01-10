@@ -19,18 +19,18 @@ const smartblindsGraphQL = 'https://api.mysmartblinds.com/v1/graphql';
 
 function MySmartBlindsBridge(log, config) {
   /* setup config */
-	this.config = config;
-	this.username = config["username"];
-	this.password = config["password"];
+  this.config = config;
+  this.username = config["username"];
+  this.password = config["password"];
 
-	this.log = log;
+  this.log = log;
 
-	if (!this.username) throw new Error('MySmartBlinds Bridge - You must provide a username');
-	if (!this.password) throw new Error('MySmartBlinds Bridge - You must provide a password');
+  if (!this.username) throw new Error('MySmartBlinds Bridge - You must provide a username');
+  if (!this.password) throw new Error('MySmartBlinds Bridge - You must provide a password');
 }
 
 MySmartBlindsBridge.prototype = {
-  accessories: function(callback) {
+  accessories: function (callback) {
     this.log('Looking for blinds...');
     const platform = this;
     const foundBlinds = [];
@@ -44,19 +44,19 @@ MySmartBlindsBridge.prototype = {
         smartblinds_options,
         { username: platform.username, password: platform.password }
       ),
-      function(err, authResult) {
+      function (err, authResult) {
         if (err) {
           platform.log(err);
         } else {
           auth0Token = authResult.id_token;
 
           // Auth Token will expire in about 10 hours, so to beat that, refresh it every 8 hours
-          auth0TokenInterval = setInterval(platform.refreshAuthToken, 1000*60*60*8);
+          auth0TokenInterval = setInterval(platform.refreshAuthToken, 1000 * 60 * 60 * 8);
           const options = {
             method: 'POST',
             uri: smartblindsGraphQL,
             body: {
-            query: `
+              query: `
               query GetUserInfo {
                 user {
                   rooms {
@@ -81,20 +81,20 @@ MySmartBlindsBridge.prototype = {
             }
           };
           rp(options)
-          .then(function (parsedBody) {
-            const {
-              rooms,
-              blinds,
-            } = parsedBody.data.user;
+            .then(function (parsedBody) {
+              const {
+                rooms,
+                blinds,
+              } = parsedBody.data.user;
 
-            const blindPromise = [];
-            blinds.forEach((blind) => {
-              if (!blind.deleted) {
-                const blind_options = {
-                  method: 'POST',
-                  uri: 'https://api.mysmartblinds.com/v1/graphql',
-                  body: {
-                    query: `
+              const blindPromise = [];
+              blinds.forEach((blind) => {
+                if (!blind.deleted) {
+                  const blind_options = {
+                    method: 'POST',
+                    uri: 'https://api.mysmartblinds.com/v1/graphql',
+                    body: {
+                      query: `
                       query GetBlindsState($blinds: [String]) {
                         blindsState(encodedMacAddresses: $blinds) {
                           encodedMacAddress
@@ -104,42 +104,42 @@ MySmartBlindsBridge.prototype = {
                         }
                       }
                     `,
-                    variables: { blinds: blind.encodedMacAddress },
-                  },
-                  json: true,
-                  headers: {
-                    Authorization: `Bearer ${auth0Token}`,
-                  }
-                };
-                blindPromise.push(
-                  rp(blind_options)
-                  .then(function (parsedBody) {
-                    const blindState = parsedBody.data.blindsState[0];
-                    const homeKitBlindPosition = parseInt(blindState.position);
-                    const accessory = new MySmartBlindsBridgeAccessory(platform.log,platform.config,
-                      {
-                      name: `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`,
-                      encodedMacAddress: blind.encodedMacAddress,
-                      blindPosition: homeKitBlindPosition,
-                      batteryLevel: blindState.batteryLevel
-                    });
-                    foundBlinds.push(accessory);
-                  })
-                );
-              }
+                      variables: { blinds: blind.encodedMacAddress },
+                    },
+                    json: true,
+                    headers: {
+                      Authorization: `Bearer ${auth0Token}`,
+                    }
+                  };
+                  blindPromise.push(
+                    rp(blind_options)
+                      .then(function (parsedBody) {
+                        const blindState = parsedBody.data.blindsState[0];
+                        const homeKitBlindPosition = parseInt(blindState.position);
+                        const accessory = new MySmartBlindsBridgeAccessory(platform.log, platform.config,
+                          {
+                            name: `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`,
+                            encodedMacAddress: blind.encodedMacAddress,
+                            blindPosition: homeKitBlindPosition,
+                            batteryLevel: blindState.batteryLevel
+                          });
+                        foundBlinds.push(accessory);
+                      })
+                  );
+                }
+              })
+              Promise.all(blindPromise).then(() => {
+                callback(foundBlinds);
+              });
             })
-            Promise.all(blindPromise).then(() => {
-              callback(foundBlinds);
+            .catch(function (err) {
+              platform.log('Error getting user info/auth token', err);
             });
-          })
-          .catch(function (err) {
-            platform.log('Error getting user info/auth token', err);
-          });
         }
       }
     )
   },
-  refreshAuthToken: function() {
+  refreshAuthToken: function () {
     const platform = this;
     const authenticationClient = new auth0.AuthenticationClient(
       smartblinds_auth
@@ -150,7 +150,7 @@ MySmartBlindsBridge.prototype = {
         smartblinds_options,
         { username: platform.username, password: platform.password }
       ),
-      function(err, authResult) {
+      function (err, authResult) {
         if (err) {
           platform.log(err);
         } else {
@@ -171,18 +171,18 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.blindPosition = blind.blindPosition;
   this.batteryLevel = blind.batteryLevel;
   this.currentPosition = this.blindPosition;
-	this.targetPosition = this.blindPosition;
-	
-	this.positionState = Characteristic.PositionState.STOPPED;
+  this.targetPosition = this.blindPosition;
+
+  this.positionState = Characteristic.PositionState.STOPPED;
 }
 
 MySmartBlindsBridgeAccessory.prototype = {
-  getTargetPosition: function(callback){
-		this.log("getTargetPosition :", this.targetPosition);
-		this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
-		callback(null, this.targetPosition);
-	},
-	setTargetPosition: function(value, callback) {
+  getTargetPosition: function (callback) {
+    this.log("getTargetPosition :", this.targetPosition);
+    this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
+    callback(null, this.targetPosition);
+  },
+  setTargetPosition: function (value, callback) {
     const thisBlind = this;
     thisBlind.targetPosition = parseInt(value);
 
@@ -192,7 +192,7 @@ MySmartBlindsBridgeAccessory.prototype = {
       method: 'POST',
       uri: smartblindsGraphQL,
       body: {
-      query: `
+        query: `
         mutation UpdateBlindsPosition($blinds: [String], $position: Int!) {
           updateBlindsPosition(encodedMacAddresses: $blinds, position: $position) {
             encodedMacAddress
@@ -213,54 +213,54 @@ MySmartBlindsBridgeAccessory.prototype = {
       }
     };
     rp(options)
-    .then(function (parsedBody) {
-      thisBlind.batteryLevel = parsedBody.data.updateBlindsPosition[0].batteryLevel;
-      thisBlind.currentPosition = thisBlind.targetPosition;
-			thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
-			thisBlind.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
-			thisBlind.log("currentPosition is now %s", thisBlind.currentPosition);
-			callback(null);
-    });
+      .then(function (parsedBody) {
+        thisBlind.batteryLevel = parsedBody.data.updateBlindsPosition[0].batteryLevel;
+        thisBlind.currentPosition = thisBlind.targetPosition;
+        thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
+        thisBlind.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
+        thisBlind.log("currentPosition is now %s", thisBlind.currentPosition);
+        callback(null);
+      });
   },
-  getPositionState: function(callback) {
-		this.log("getPositionState :", this.positionState);
-		callback(null, this.positionState);
+  getPositionState: function (callback) {
+    this.log("getPositionState :", this.positionState);
+    callback(null, this.positionState);
   },
-  getBatteryLevel: function(callback) {
+  getBatteryLevel: function (callback) {
     callback(null, parseFloat(this.batteryLevel));
   },
-  getServices: function() {
+  getServices: function () {
     const services = []
 
     this.service = new Service.WindowCovering(this.name);
 
-    this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', function(callback) {
+    this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', function (callback) {
       // function coming soon
       callback(null, this.currentPosition);
     }.bind(this));
 
     this.service.getCharacteristic(Characteristic.TargetPosition)
-    .on('get', this.getTargetPosition.bind(this))
-    .on('set', this.setTargetPosition.bind(this));
+      .on('get', this.getTargetPosition.bind(this))
+      .on('set', this.setTargetPosition.bind(this));
 
     this.service.getCharacteristic(Characteristic.PositionState)
-		.on('get', this.getPositionState.bind(this));
+      .on('get', this.getPositionState.bind(this));
 
     services.push(this.service);
 
-    const batteryService  = new Service.BatteryService(this.name);
+    const batteryService = new Service.BatteryService(this.name);
     batteryService.getCharacteristic(Characteristic.BatteryLevel)
-    .setProps({ maxValue: 100, minValue: 0, minStep: 1 })
-    .on('get', this.getBatteryLevel.bind(this));
+      .setProps({ maxValue: 100, minValue: 0, minStep: 1 })
+      .on('get', this.getBatteryLevel.bind(this));
 
     services.push(batteryService);
 
     const service = new Service.AccessoryInformation();
 
     service.setCharacteristic(Characteristic.Manufacturer, "MySmartBlinds")
-    .setCharacteristic(Characteristic.Name, this.name)
-		.setCharacteristic(Characteristic.SerialNumber, this.encodedMacAddress)
-		.setCharacteristic(Characteristic.Model, 'Window Blind');
+      .setCharacteristic(Characteristic.Name, this.name)
+      .setCharacteristic(Characteristic.SerialNumber, this.encodedMacAddress)
+      .setCharacteristic(Characteristic.Model, 'Window Blind');
 
     services.push(service);
 
@@ -273,7 +273,7 @@ module.exports.platform = MySmartBlindsBridge;
 
 let Service, Characteristic;
 
-module.exports = function(homebridge) {
+module.exports = function (homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
 
