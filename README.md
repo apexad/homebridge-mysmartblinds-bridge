@@ -3,11 +3,16 @@
 
 [Homebridge](https://github.com/nfarina/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub). You must have configured your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
 
-USE AT YOUR OWN RISK.
+This plugin is not affilited with the MySmartBlinds product.
 
 ## features
-1. Auto-detect all blinds setup in the app, no need to specify each blind
+1. Uses bride to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
 2. Shows battery level for each blind (updated only when blind is open/closed)
+3. Supports blind percentages
+
+## notes
+1. Be sure to calibrate your blinds in the 'MySmartBlinds' app if you see that the blinds are not opening perfectly straight
+
 
 ## minimal configuration
 Add to platforms section of homebridge `config.json` after installing the plugin:
@@ -19,19 +24,22 @@ Add to platforms section of homebridge `config.json` after installing the plugin
   "password": "<password>"
 }
 ```
+
 Field                   | Description
 ------------------------|------------
 **platform**            | Must always be "MySmartBlindsBridge". (required)
-**name**                | Must alwasy be "MySmartBlindsBridge", (required)
+**name**                | Best to set to "MySmartBlindsBridge", (required)
 **username**            | MySmartBlinds app username (usually email address), (required)
-**password**            | MySmartBlinds app username (usually email address), (required)
+**password**            | MySmartBlinds app password, (required)
 
 ## to-do
 1. add ability to change direction (from up closed to open)
 2. add an option that allows full blind motion, from down closed to open to up closed
 3. check to see if charging status could be updated
+4. add low battery notifications
 
 ## credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) used to understand mysmartblinds bridge API  
-[Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) used as an example of blind accessory 
-[crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) also used as an example of blind accessory
+[Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) used as an example of blind accessory  
+[crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) also used as an example of blind accessory  
+primary tester/hardware provider for the project: mrferreira89 (reddit user)
