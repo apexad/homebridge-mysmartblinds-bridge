@@ -25,8 +25,12 @@ function MySmartBlindsBridge(log, config) {
 
   this.log = log;
 
-  if (!this.username) throw new Error('MySmartBlinds Bridge - You must provide a username');
-  if (!this.password) throw new Error('MySmartBlinds Bridge - You must provide a password');
+  if (!this.username) {
+    throw new Error('MySmartBlinds Bridge - You must provide a username');
+  }
+  if (!this.password) {
+    throw new Error('MySmartBlinds Bridge - You must provide a password');
+  }
 }
 
 MySmartBlindsBridge.prototype = {
@@ -178,7 +182,7 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
 
 MySmartBlindsBridgeAccessory.prototype = {
   getTargetPosition: function (callback) {
-    this.log("getTargetPosition :", this.targetPosition);
+    this.log(`${this.name} getTargetPosition : ${this.targetPosition}`);
     this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
     callback(null, this.targetPosition);
   },
@@ -186,7 +190,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     const thisBlind = this;
     thisBlind.targetPosition = parseInt(value);
 
-    thisBlind.log("setTargetPosition from %s to %s", thisBlind.targetPosition, thisBlind.targetPosition);
+    thisBlind.log(`${thisBlind.name} setTargetPosition from ${thisBlind.targetPosition} to ${thisBlind.targetPosition}`);
 
     const options = {
       method: 'POST',
@@ -218,12 +222,12 @@ MySmartBlindsBridgeAccessory.prototype = {
         thisBlind.currentPosition = thisBlind.targetPosition;
         thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
         thisBlind.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
-        thisBlind.log("currentPosition is now %s", thisBlind.currentPosition);
+        thisBlind.log(`${thisBlind.name} currentPosition is now ${thisBlind.currentPosition}`);
         callback(null);
       });
   },
   getPositionState: function (callback) {
-    this.log("getPositionState :", this.positionState);
+    this.log(`${this.name} getPositionState : this.positionState`);
     callback(null, this.positionState);
   },
   getBatteryLevel: function (callback) {
@@ -235,7 +239,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     this.service = new Service.WindowCovering(this.name);
 
     this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', function (callback) {
-      // function coming soon
+      // using cached current position, rather than fetching actual current position via the API
       callback(null, this.currentPosition);
     }.bind(this));
 
