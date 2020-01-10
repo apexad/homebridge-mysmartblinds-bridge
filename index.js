@@ -190,7 +190,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     const thisBlind = this;
     thisBlind.targetPosition = parseInt(value);
 
-    thisBlind.log(`${thisBlind.name} setTargetPosition from ${thisBlind.targetPosition} to ${thisBlind.targetPosition}`);
+    thisBlind.log(`${thisBlind.name} setTargetPosition from ${thisBlind.currentPosition} to ${thisBlind.targetPosition}`);
 
     const options = {
       method: 'POST',
@@ -228,7 +228,7 @@ MySmartBlindsBridgeAccessory.prototype = {
       });
   },
   getPositionState: function (callback) {
-    this.log(`${this.name} getPositionState : this.positionState`);
+    this.log(`${this.name} getPositionState : ${this.positionState}`);
     callback(null, this.positionState);
   },
   getBatteryLevel: function (callback) {
