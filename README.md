@@ -7,12 +7,12 @@ This plugin is not affilited with the MySmartBlinds product.
 
 ## features
 1. Uses bride to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
-2. Shows battery level for each blind (updated only when blind is open/closed)
-3. Supports blind percentages
+2. Supports blind percentages
+3. Shows battery level for each blind (updated only when blind is open/closed)
+4. Issues a low battery indicator if battery is below 20%
 
 ## notes
 1. Be sure to calibrate your blinds in the 'MySmartBlinds' app if you see that the blinds are not opening perfectly straight
-
 
 ## minimal configuration
 Add to platforms section of homebridge `config.json` after installing the plugin:
@@ -36,7 +36,6 @@ Field                   | Description
 1. add ability to change direction (from up closed to open)
 2. add an option that allows full blind motion, from down closed to open to up closed
 3. check to see if charging status could be updated
-4. add low battery notifications
 
 ## credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) used to understand mysmartblinds bridge API  
