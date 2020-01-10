@@ -238,7 +238,7 @@ MySmartBlindsBridgeAccessory.prototype = {
   getStatusLowBattery: function (callback) {
     callback(
       null,
-      this.batteryLevel < 50
+      this.batteryLevel < 20
         ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW
         : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL
     )
