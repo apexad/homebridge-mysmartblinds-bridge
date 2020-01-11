@@ -55,7 +55,7 @@ MySmartBlindsBridge.prototype = {
           auth0Token = authResult.id_token;
 
           // Auth Token will expire in about 10 hours, so to beat that, refresh it every 8 hours
-          auth0TokenInterval = setInterval(platform.refreshAuthToken, 1000 * 60 * 60 * 8);
+          auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);
           const options = {
             method: 'POST',
             uri: smartblindsGraphQL,
