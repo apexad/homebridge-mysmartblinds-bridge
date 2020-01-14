@@ -34,8 +34,9 @@ Field                   | Description
 **password**            | MySmartBlinds app password, (required)
 
 ## to-do
-1. add config to change direction (from up closed to open)
-2. add config option that allows full blind motion, from down closed (0) to open (100) to up closed (200)
+1. Add config option to change direction (from up closed to open)
+2. Add config option that allows full blind motion, from down closed (0) to open (100) to up closed (200)
+3. Investigate API limits and nadd polling for when blinds are changed in the MySmartBlinds app
 
 ## credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) used to understand mysmartblinds bridge API  
