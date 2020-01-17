@@ -129,11 +129,17 @@ MySmartBlindsBridge.prototype = {
                           });
                         foundBlinds.push(accessory);
                       })
+                      .catch(function(err) {
+                        platform.log(`${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name} ERROR`, err)
+                      })
                   );
                 }
               })
               Promise.all(blindPromise).then(() => {
                 callback(foundBlinds);
+              })
+              .catch(function(err) {
+                platform.log('Error during blind state fetch', err);
               });
             })
             .catch(function (err) {
@@ -224,6 +230,10 @@ MySmartBlindsBridgeAccessory.prototype = {
         thisBlind.service.setCharacteristic(Characteristic.CurrentPosition, thisBlind.currentPosition);
         thisBlind.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
         thisBlind.log(`${thisBlind.name} currentPosition is now ${thisBlind.currentPosition}`);
+        callback(null);
+      })
+      .catch(function(err) {
+        thisBlind.log(`${thisBlind.name} setTargetPosition ERROR`, err);
         callback(null);
       });
   },
