@@ -25,7 +25,7 @@ Add to platforms section of homebridge `config.json` after installing the plugin
   "password": "<password>"
 }
 ```
-``diff
+```diff
 - All fields are required
 ```
 
