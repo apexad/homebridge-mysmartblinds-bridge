@@ -25,13 +25,16 @@ Add to platforms section of homebridge `config.json` after installing the plugin
   "password": "<password>"
 }
 ```
+``diff
+- All fields are required
+```
 
 Field                   | Description
 ------------------------|------------
-**platform**            | Must always be "MySmartBlindsBridge". (required)
-**name**                | Best to set to "MySmartBlindsBridge", (required)
-**username**            | MySmartBlinds app username (usually email address), (required)
-**password**            | MySmartBlinds app password, (required)
+**platform**            | Must always be "MySmartBlindsBridge"
+**name**                | Best to set to "MySmartBlindsBridge"
+**username**            | MySmartBlinds app username (usually email address)
+**password**            | MySmartBlinds app password
 
 ## to-do
 1. Add config option to change direction (from up closed to open)
