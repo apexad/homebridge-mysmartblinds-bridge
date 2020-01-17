@@ -246,9 +246,10 @@ MySmartBlindsBridgeAccessory.prototype = {
     callback(null, parseFloat(this.batteryLevel));
   },
   getStatusLowBattery: function (callback) {
+    // value of -1 means data was not sent correctly, so ignore it for now
     callback(
       null,
-      this.batteryLevel < 20
+      (this.batteryLevel < 20 && this.batteryLevel !== -1)
         ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW
         : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL
     )
