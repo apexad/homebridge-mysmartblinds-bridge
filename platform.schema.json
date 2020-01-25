@@ -17,14 +17,22 @@
         },
         "username": {
             "title": "Username",
-            "type": "string"
+            "type": "string",
+            "required": true
         },
         "password": {
             "title": "Password",
             "type": "string",
+            "required": true,
             "options": {
                 "hidden": true
             }
+        },
+        "report99Open": {
+            "title": "Show 99% as Open",
+            "type": "boolean",
+            "required": true,
+            "default": false
         }
       }
   }
