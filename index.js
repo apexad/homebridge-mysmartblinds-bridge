@@ -182,15 +182,35 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.batteryLevel = blind.batteryLevel;
   this.currentPosition = this.blindPosition;
   this.targetPosition = this.blindPosition;
+  this.report99Open = this.config["report99Open"] || false;
 
   this.positionState = Characteristic.PositionState.STOPPED;
 }
 
 MySmartBlindsBridgeAccessory.prototype = {
+  getCurrentPosition: function (callback) {
+    // using cached current position, rather than fetching actual current position via the API
+    let reportCurrenttPosition = this.currentPosition;
+
+    // if report99Open is true, send 100 even if it is only 99!
+    const check99 = parseInt(reportCurrenttPosition) === 99 && this.report99Open;
+    if (check99) {
+      reportCurrenttPosition = 100;
+    }
+    this.log(`${this.name} getCurrentPosition : ${reportCurrenttPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
+    callback(null, reportCurrenttPosition);
+  },
   getTargetPosition: function (callback) {
-    this.log(`${this.name} getTargetPosition : ${this.targetPosition}`);
+    let reportTargetPosition = this.targetPosition;
+
+    // if report99Open is true, send 100 even if it is only 99!
+    const check99 = parseInt(reportTargetPosition) === 99 && this.report99Open;
+    if (check99) {
+      reportTargetPosition = 100;
+    }
+    this.log(`${this.name} getTargetPosition : ${reportTargetPosition}${check99 ? ` (Actual ${this.targetPosition})` : ''}`);
     this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
-    callback(null, this.targetPosition);
+    callback(null, reportTargetPosition);
   },
   setTargetPosition: function (value, callback) {
     const thisBlind = this;
@@ -259,10 +279,7 @@ MySmartBlindsBridgeAccessory.prototype = {
 
     this.service = new Service.WindowCovering(this.name);
 
-    this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', function (callback) {
-      // using cached current position, rather than fetching actual current position via the API
-      callback(null, this.currentPosition);
-    }.bind(this));
+    this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', this.getCurrentPosition.bind(this));
 
     this.service.getCharacteristic(Characteristic.TargetPosition)
       .on('get', this.getTargetPosition.bind(this))

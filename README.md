@@ -14,6 +14,7 @@ This plugin is not affilited with the MySmartBlinds product.
 
 ## notes
 1. Be sure to calibrate your blinds in the 'MySmartBlinds' app if you see that the blinds are not opening perfectly straight
+2. If after calibration you see blinds show as 99% Open (when using automation), set `report99Open` to `true` to see if this helps
 
 ## minimal configuration
 Add to platforms section of homebridge `config.json` after installing the plugin:
@@ -35,6 +36,7 @@ Field                   | Description
 **name**                | Best to set to "MySmartBlindsBridge"
 **username**            | MySmartBlinds app username (usually email address)
 **password**            | MySmartBlinds app password
+**report99Open**        | __(optional, defaults to false)__ Forces plugin to show 99% as open. See note 2 above
 
 ## to-do
 1. Add config option to change direction (from up closed to open)
