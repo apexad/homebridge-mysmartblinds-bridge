@@ -190,21 +190,21 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
 MySmartBlindsBridgeAccessory.prototype = {
   getCurrentPosition: function (callback) {
     // using cached current position, rather than fetching actual current position via the API
-    let reportCurrenttPosition = this.currentPosition;
+    let reportCurrentPosition = this.currentPosition;
 
     // if report99Open is true, send 100 even if it is only 99!
-    const check99 = parseInt(reportCurrenttPosition) === 99 && this.report99Open;
+    const check99 = parseInt(reportCurrentPosition) === 99 && this.report99Open;
     if (check99) {
-      reportCurrenttPosition = 100;
+      reportCurrentPosition = 100;
     }
-    this.log(`${this.name} getCurrentPosition : ${reportCurrenttPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
-    callback(null, reportCurrenttPosition);
+    this.log(`${this.name} getCurrentPosition : ${reportCurrentPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
+    callback(null, reportCurrentPosition);
   },
   getTargetPosition: function (callback) {
     let reportTargetPosition = this.targetPosition;
 
     // if report99Open is true, send 100 even if it is only 99!
-    const check99 = parseInt(reportTargetPosition) === 99 && this.report99Open;
+    const check99 = (reportTargetPosition === 99) && this.report99Open;
     if (check99) {
       reportTargetPosition = 100;
     }
@@ -279,7 +279,8 @@ MySmartBlindsBridgeAccessory.prototype = {
 
     this.service = new Service.WindowCovering(this.name);
 
-    this.service.getCharacteristic(Characteristic.CurrentPosition).on('get', this.getCurrentPosition.bind(this));
+    this.service.getCharacteristic(Characteristic.CurrentPosition)
+      .on('get', this.getCurrentPosition.bind(this));
 
     this.service.getCharacteristic(Characteristic.TargetPosition)
       .on('get', this.getTargetPosition.bind(this))
