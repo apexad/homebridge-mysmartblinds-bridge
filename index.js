@@ -119,7 +119,10 @@ MySmartBlindsBridge.prototype = {
                     rp(blind_options)
                       .then(function (parsedBody) {
                         const blindState = parsedBody.data.blindsState[0];
-                        const homeKitBlindPosition = parseInt(blindState.position);
+                        let homeKitBlindPosition = parseInt(blindState.position);
+                        if (platform.config.closeUp && homeKitBlindPosition > 100) {
+                          homeKitBlindPosition = Math.abs(homeKitBlindPosition - 200);
+                        }
                         const accessory = new MySmartBlindsBridgeAccessory(platform.log, platform.config,
                           {
                             name: `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`,
@@ -183,6 +186,7 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.currentPosition = this.blindPosition;
   this.targetPosition = this.blindPosition;
   this.report99Open = this.config["report99Open"] || false;
+  this.closeUp = this.config["closeUp"] || false;
 
   this.positionState = Characteristic.PositionState.STOPPED;
 }
@@ -190,12 +194,17 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
 MySmartBlindsBridgeAccessory.prototype = {
   getCurrentPosition: function (callback) {
     // using cached current position, rather than fetching actual current position via the API
-    let reportCurrentPosition = this.currentPosition;
+    let reportCurrentPosition = parseInt(this.currentPosition);
 
     // if report99Open is true, send 100 even if it is only 99!
     const check99 = parseInt(reportCurrentPosition) === 99 && this.report99Open;
     if (check99) {
       reportCurrentPosition = 100;
+    }
+
+    const check1 = reportCurrentPosition === 1;
+    if (check1) {
+      reportCurrentPosition = 0;
     }
     this.log(`${this.name} getCurrentPosition : ${reportCurrentPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
     callback(null, reportCurrentPosition);
@@ -208,6 +217,12 @@ MySmartBlindsBridgeAccessory.prototype = {
     if (check99) {
       reportTargetPosition = 100;
     }
+
+    const check1 = reportTargetPosition === 1;
+    if (check1) {
+      reportTargetPosition = 0;
+    }
+
     this.log(`${this.name} getTargetPosition : ${reportTargetPosition}${check99 ? ` (Actual ${this.targetPosition})` : ''}`);
     this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
     callback(null, reportTargetPosition);
@@ -233,7 +248,7 @@ MySmartBlindsBridgeAccessory.prototype = {
         }
       `,
         variables: {
-          position: thisBlind.targetPosition,
+          position: thisBlind.closeUp ? (Math.abs(thisBlind.targetPosition - 200)) : thisBlind.targetPosition,
           blinds: this.encodedMacAddress
         },
       },
