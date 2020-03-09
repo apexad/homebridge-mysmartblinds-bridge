@@ -185,7 +185,6 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.batteryLevel = blind.batteryLevel;
   this.currentPosition = this.blindPosition;
   this.targetPosition = this.blindPosition;
-  this.report99Open = this.config["report99Open"] || false;
   this.closeUp = this.config["closeUp"] || false;
 
   this.positionState = Characteristic.PositionState.STOPPED;
@@ -196,8 +195,7 @@ MySmartBlindsBridgeAccessory.prototype = {
     // using cached current position, rather than fetching actual current position via the API
     let reportCurrentPosition = parseInt(this.currentPosition);
 
-    // if report99Open is true, send 100 even if it is only 99!
-    const check99 = parseInt(reportCurrentPosition) === 99 && this.report99Open;
+    const check99 = reportCurrentPosition === 99;
     if (check99) {
       reportCurrentPosition = 100;
     }
@@ -212,8 +210,7 @@ MySmartBlindsBridgeAccessory.prototype = {
   getTargetPosition: function (callback) {
     let reportTargetPosition = this.targetPosition;
 
-    // if report99Open is true, send 100 even if it is only 99!
-    const check99 = (reportTargetPosition === 99) && this.report99Open;
+    const check99 = reportTargetPosition === 99;
     if (check99) {
       reportTargetPosition = 100;
     }
