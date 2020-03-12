@@ -43,4 +43,5 @@ Field                   | Description
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) used to understand mysmartblinds bridge API  
 [Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) used as an example of blind accessory  
 [crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) also used as an example of blind accessory  
-primary tester/hardware provider for the project: mrferreira89 (reddit user)
+primary tester/hardware provider for the project: mrferreira89 (reddit user)  
+[gregmichael](https://github.com/gregmichael) - sponsoor and tester
