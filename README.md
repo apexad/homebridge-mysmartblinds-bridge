@@ -11,6 +11,7 @@ This plugin is not affilited with the MySmartBlinds product.
 3. Shows battery level for each blind (updated only when blind is open/closed)
 4. Issues a low battery indicator if battery is below 20%
 5. Logging (via Homebridge) of all actions done
+6. Blinds can close down or up (via config option)
 
 ## notes
 1. Be sure to calibrate your blinds in the 'MySmartBlinds' app if you see that the blinds are not opening perfectly straight
