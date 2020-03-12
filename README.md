@@ -36,10 +36,6 @@ Field                   | Description
 **password**            | MySmartBlinds app password
 **closeUp**             | __(optional, defaults to false)__ Blinds close in the upwards position
 
-## to-do
-1. Add config option that allows full blind motion, from down closed (0) to open (100) to up closed (200)
-2. Investigate API limits and add polling for when blinds are changed in the MySmartBlinds app
-
 ## sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
 [gregmichael](https://github.com/gregmichael) - sponsor and tester
