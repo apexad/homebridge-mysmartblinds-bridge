@@ -39,9 +39,11 @@ Field                   | Description
 1. Add config option that allows full blind motion, from down closed (0) to open (100) to up closed (200)
 2. Investigate API limits and add polling for when blinds are changed in the MySmartBlinds app
 
-## credits
-[ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) used to understand mysmartblinds bridge API  
-[Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) used as an example of blind accessory  
-[crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) also used as an example of blind accessory  
-primary tester/hardware provider for the project: mrferreira89 (reddit user)  
-[gregmichael](https://github.com/gregmichael) - sponsoor and tester
+## sponsors
+mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
+[gregmichael](https://github.com/gregmichael) - sponsor and tester
+
+## code credits
+[ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) - used to understand mysmartblinds bridge API  
+[Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) - used as an example of blind accessory  
+[crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) - also used as an example of blind accessory
