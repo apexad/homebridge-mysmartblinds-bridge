@@ -24,10 +24,10 @@
           "hidden": true
         }
       },
-      "report99Open": {
-        "title": "Show 99% as Open",
+      "closeUp": {
+        "title": "Close blinds up",
         "type": "boolean",
-        "required": true,
+        "required": false,
         "default": false
       }
     }
