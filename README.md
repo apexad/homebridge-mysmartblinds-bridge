@@ -1,11 +1,12 @@
 # homebridge-mysmartblinds-bridge
 [![NPM Version](https://img.shields.io/npm/v/homebridge-mysmartblinds-bridge.svg)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 
-[Homebridge](https://github.com/nfarina/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub). You must have configured your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
+[Homebridge](https://github.com/nfarina/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub).  
+Configure your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
 
 This plugin is not affilited with the MySmartBlinds product.
 
-## features
+## Features
 1. Uses bridge to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
 2. Supports blind percentages
 3. Shows battery level for each blind (updated only when blind is open/closed)
@@ -13,12 +14,17 @@ This plugin is not affilited with the MySmartBlinds product.
 5. Logging (via Homebridge) of all actions done
 6. Blinds can close down or up (via config option)
 
-## notes
-1. Be sure to calibrate your blinds in the 'MySmartBlinds' app if you see that the blinds are not opening perfectly straight
-2. If after calibration you see blinds show as 99% Open (when using automation), set `report99Open` to `true` to see if this helps
+## Notes
+1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
+2. If switching to `closeUp` it's best to Open all blinds first and then restart homebridge
 
-## minimal configuration
-Add to platforms section of homebridge `config.json` after installing the plugin:
+## Configuration
+This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
+To configure manually, add to the `platforms` section of homebridge's `config.json` after installing the plugin.
+
+**Command:** ```sudo npm install -g homebridge-mysmartblinds-bridge```
+
+**Config:**
 ```json
 {
   "platform": "MySmartBlindsBridge",
@@ -34,13 +40,13 @@ Field                   | Description
 **name**                | Best to set to "MySmartBlindsBridge"
 **username**            | MySmartBlinds app username (usually email address)
 **password**            | MySmartBlinds app password
-**closeUp**             | __(optional, defaults to false)__ Blinds close in the upwards position
+**closeUp**             | _(optional, defaults to false)_ Blinds close in the upwards position
 
-## sponsors
+## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
 [gregmichael](https://github.com/gregmichael) - sponsor and tester
 
-## code credits
+## Code credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) - used to understand mysmartblinds bridge API  
 [Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) - used as an example of blind accessory  
 [crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) - also used as an example of blind accessory
