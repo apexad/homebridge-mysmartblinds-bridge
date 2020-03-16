@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.2...v1.3.3) (2020-03-11)
+
+
+### Documentation
+
+* **readme:** minor corrections to README.md ([296ede0](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/296ede0931e9e2dc378e0a9c802aa73945bfcaec))
+
+* **github:** Add bug report/feature request templates ([dd0dfc2](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/dd0dfc257774c7a24aaca070d39b87921b237b3b), [4ebd272](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/4ebd272122f65d603f38c846ef68819548391517))
+
+
 ## [1.3.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.1...v1.3.2) (2020-03-11)
 
 
