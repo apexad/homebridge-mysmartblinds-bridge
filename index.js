@@ -25,20 +25,29 @@ function MySmartBlindsBridge(log, config) {
 
   this.log = log;
 
-  if (!this.username) {
-    throw new Error('MySmartBlinds Bridge - You must provide a username');
-  }
-  if (!this.password) {
-    throw new Error('MySmartBlinds Bridge - You must provide a password');
+  try {
+    if (!this.username) {
+      throw new Error('MySmartBlinds Bridge - You must provide a username');
+    }
+    if (!this.password) {
+      throw new Error('MySmartBlinds Bridge - You must provide a password');
+    }
+  } catch(err) {
+    this.log(err);
   }
 }
 
 MySmartBlindsBridge.prototype = {
   accessories: function (callback) {
-    this.log('Looking for blinds...');
     const platform = this;
     const foundBlinds = [];
 
+    if (!this.username || !this.password) {
+      callback(foundBlinds);
+      return;
+    }
+
+    this.log('Looking for blinds...');
     const authenticationClient = new auth0.AuthenticationClient(
       smartblinds_auth
     );
