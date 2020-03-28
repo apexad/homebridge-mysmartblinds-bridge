@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.3...v1.3.4) (2020-03-27)
+
+
+### Bug Fixes
+
+* **plugin-code:** plugin now fails gracefully with no config ([a046905](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a0469055a24e30d6f446303f9f0932b65476c443]))
+
+### Documentation
+
+* **package.json:** bump node engine to node v10 ([f4dcebb](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/f4dcebb94bb21b71d000b16e61ffac54f325e117))
+
+* **readme:** update homebridge link ([cace02a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/cace02a2f34f2edf1c7cf1e4f521f310a551391f))
+
+* **readme:** switch badges to badgen.net ([27b6fd3](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/27b6fd32a9cd76bc0384f0c377f60db78c91aec9))
+
+
 ## [1.3.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.2...v1.3.3) (2020-03-11)
 
 
