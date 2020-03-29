@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.5](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.4...v1.3.5) (2020-03-28)
+
+
+### Bug Fixes
+
+* **plugin-code:** if plugin has no config, return ([a2d5efa](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a2d5efa3742519f998449dcfb53d07fa27e28c53]))
+
+### Documentation
+
+* **readme:** update badges (MIT, PayPal) ([ee629c7](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ee629c7d7e209d0bba3837a0c8c5727f8416f6fd))
+
 ## [1.3.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.3...v1.3.4) (2020-03-27)
 
 
