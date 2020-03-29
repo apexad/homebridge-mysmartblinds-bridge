@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-* **plugin-code:** if plugin has no config, return ([a2d5efa](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a2d5efa3742519f998449dcfb53d07fa27e28c53]))
+* **plugin-code:** if plugin has no config, return ([a2d5efa](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a2d5efa3742519f998449dcfb53d07fa27e28c53))
 
 ### Documentation
 
