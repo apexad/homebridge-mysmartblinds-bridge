@@ -18,6 +18,11 @@ const smartblinds_options = {
 const smartblindsGraphQL = 'https://api.mysmartblinds.com/v1/graphql';
 
 function MySmartBlindsBridge(log, config) {
+  /* plugin not configured check */
+  if (!config) {
+    return;
+  }
+
   /* setup config */
   this.config = config;
   this.username = config["username"];
