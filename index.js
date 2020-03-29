@@ -64,7 +64,9 @@ MySmartBlindsBridge.prototype = {
       ),
       function (err, authResult) {
         if (err) {
-          platform.log(err);
+          platform.log(err.message);
+          callback(foundBlinds);
+          return;
         } else {
           auth0Token = authResult.id_token;
 
@@ -147,7 +149,8 @@ MySmartBlindsBridge.prototype = {
                         foundBlinds.push(accessory);
                       })
                       .catch(function(err) {
-                        platform.log(`${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name} ERROR`, err)
+                        const blindError = `${rooms[_.findIndex(rooms, { id: blind.roomId })].name} ${blind.name}: ${err.message}`
+                        throw new Error(blindError); // re-catch later (in Promise.all)
                       })
                   );
                 }
@@ -157,10 +160,14 @@ MySmartBlindsBridge.prototype = {
               })
               .catch(function(err) {
                 platform.log('Error during blind state fetch', err);
+                callback(foundBlinds);
+                return;
               });
             })
             .catch(function (err) {
               platform.log('Error getting user info/auth token', err);
+              callback(foundBlinds);
+              return;
             });
         }
       }
