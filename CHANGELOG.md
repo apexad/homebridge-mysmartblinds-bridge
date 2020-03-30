@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.5...v1.3.6) (2020-03-29)
+
+
+### Bug Fixes
+
+* **plugin-code:** additonal error checking/fail gracefully code ([808aba6](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/808aba61d32455ba0f31ec26eaefb0ce65686e93))
+
+### Documentation
+
+* **changeloge:** fix link (to a commit) ([6ff8357](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/6ff8357503d8722d2c74698bf3d479e322eb2357))
+
+* **readme:** add homebridge:verified badge ([55cd18](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/55cd1815ae28146b585e22fe44b3049eda36d734))
+
 ## [1.3.5](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.4...v1.3.5) (2020-03-28)
 
 
