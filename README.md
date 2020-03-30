@@ -2,6 +2,7 @@
 [![mit license](https://badgen.net/badge/license/MIT/red)](https://github.com/apexad/homebridge-mysmartblinds-bridge/blob/master/LICENSE)
 [![npm](https://badgen.net/npm/v/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![npm](https://badgen.net/npm/dt/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 [![donate](https://badgen.net/badge/donate/paypal/91BE09)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JS2VTL89E6VZ4&source=url)
 
 
