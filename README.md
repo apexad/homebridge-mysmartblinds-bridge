@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://github.com/homebridge/homebridge/wiki/Verified-Plugins#verified-plugins"><img alt="Homebridge Verified" src="https://raw.githubusercontent.com/apexad/homebridge-mysmartblinds-bridge/master/branding/Homebridge_x_MySmartBlinds.png" width="500px"></a>
+</p>
+
 # homebridge-mysmartblinds-bridge
 [![mit license](https://badgen.net/badge/license/MIT/red)](https://github.com/apexad/homebridge-mysmartblinds-bridge/blob/master/LICENSE)
 [![npm](https://badgen.net/npm/v/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
@@ -9,7 +13,7 @@
 [Homebridge](https://github.com/homebridge/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub).  
 Configure your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
 
-This plugin is not affilited with the MySmartBlinds product.
+This plugin is not affiliated with the MySmartBlinds product.
 
 ## Features
 1. Uses bridge to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
