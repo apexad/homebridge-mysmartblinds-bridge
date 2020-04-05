@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.4.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.5...v1.3.6) (2020-03-29)
+
+## [1.4.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.0...v1.4.1) (2020-03-29)
+
+
+### Documentation
+
+* **readme:** add Homebridge/MySmartBlinds branding ([7be4845](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/7be4845a28ed48cd71fd811b34f3c60b7448f0ff))
+
+* **mit license file:** corrected copyright name in MIT LICENSE ([3196174](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/31961743fac013954dd3739981544f4633c3fb5a))
+
+## [1.4.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.3.5...v1.4.0) (2020-03-29)
 
 
 ### Bug Fixes
