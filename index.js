@@ -27,6 +27,7 @@ function MySmartBlindsBridge(log, config) {
   this.config = config;
   this.username = config["username"];
   this.password = config["password"];
+  this.allowDebug = config["allow_debug"] || false;
 
   this.log = log;
 
@@ -107,6 +108,10 @@ MySmartBlindsBridge.prototype = {
                 blinds,
               } = parsedBody.data.user;
 
+              if (platform.allowDebug) {
+                platform.log('DEBUG', 'GetUserInfo', parsedBody);
+              }
+
               const blindPromise = [];
               blinds.forEach((blind) => {
                 if (!blind.deleted) {
@@ -134,6 +139,10 @@ MySmartBlindsBridge.prototype = {
                   blindPromise.push(
                     rp(blind_options)
                       .then(function (parsedBody) {
+                        if (platform.allowDebug) {
+                          platform.log('DEBUG', 'GetBlindsState', parsedBody)
+                        }
+
                         const blindState = parsedBody.data.blindsState[0];
                         let homeKitBlindPosition = parseInt(blindState.position);
                         if (platform.config.closeUp && homeKitBlindPosition > 100) {

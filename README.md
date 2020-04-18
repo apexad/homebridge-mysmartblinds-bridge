@@ -49,7 +49,8 @@ Field                   | Description
 **name**                | Best to set to "MySmartBlindsBridge"
 **username**            | MySmartBlinds app username (usually email address)
 **password**            | MySmartBlinds app password
-**closeUp**             | _(optional, defaults to false)_ Blinds close in the upwards position
+**closeUp**             | _(optional true/false, defaults to false)_ Blinds close in the upwards position
+**allow_debug**         | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  

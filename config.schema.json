@@ -29,7 +29,26 @@
         "type": "boolean",
         "required": false,
         "default": false
+      },
+      "allow_debug": {
+        "title": "Allow Debug Logs",
+        "type": "boolean"
       }
     }
-  }
+  },
+  "form": [
+    "name",
+    "username",
+    "password",
+    "closeUp",
+    {
+      "type": "fieldset",
+      "expandable": true,
+      "title": "Advanced Settings",
+      "description": "Only needed under special circumstances",
+      "items": [
+        "allow_debug"
+      ]
+    }
+  ]
 }
