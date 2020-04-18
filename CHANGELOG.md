@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.1...v1.5.0) (2020-04-18)
+
+
+### Features
+
+* **plugin feature/config option:** add a allow_debug option ([ecc16cf](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ecc16cfd3a451973daa42de8b3da1ff56c312c33))
+
 
 ## [1.4.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.0...v1.4.1) (2020-03-29)
 
