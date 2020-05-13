@@ -2,7 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.5.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.1...v1.5.1) (2020-05-12)
+## [1.5.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.1...v1.5.2) (2020-05-12)
+
+
+### Features
+
+* **plugin feature/config option:** fix config schema ([8f7119a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/8f7119a9f996077bd4e37b5f0d8218f23985f12b)) closes [#12](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/12)
+
+### Documentation
+
+* **changeloge:** fix version link ([8f7119a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/8f7119a9f996077bd4e37b5f0d8218f23985f12b))
+
+## [1.5.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.0...v1.5.1) (2020-05-12)
 
 
 ### Features
