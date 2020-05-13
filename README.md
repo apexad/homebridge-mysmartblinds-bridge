@@ -50,6 +50,7 @@ Field                   | Description
 **username**            | MySmartBlinds app username (usually email address)
 **password**            | MySmartBlinds app password
 **closeUp**             | _(optional true/false, defaults to false)_ Blinds close in the upwards position
+**status_log**          | _(optional true/false, defaults to false)_ logs position changes
 **allow_debug**         | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
 
 ## Sponsors

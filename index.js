@@ -199,7 +199,9 @@ MySmartBlindsBridge.prototype = {
         } else {
           auth0Token = authResult.id_token;
           const auth0TokenExpireDate = new Date(jwt.decode(authResult.id_token).exp * 1000).toISOString()
-          platform.log(`auth0Token refresh, now expires ${auth0TokenExpireDate}`);
+          if (platform.allowDebug) {
+            platform.log(`auth0Token refresh, now expires ${auth0TokenExpireDate}`);
+          }
         }
       }
     );
@@ -216,6 +218,7 @@ function MySmartBlindsBridgeAccessory(log, config, blind) {
   this.currentPosition = this.blindPosition;
   this.targetPosition = this.blindPosition;
   this.closeUp = this.config["closeUp"] || false;
+  this.statusLog = this.config["status_log"] || false;
 
   this.positionState = Characteristic.PositionState.STOPPED;
 }
@@ -234,7 +237,9 @@ MySmartBlindsBridgeAccessory.prototype = {
     if (check1) {
       reportCurrentPosition = 0;
     }
-    this.log(`${this.name} getCurrentPosition : ${reportCurrentPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
+    if (this.statusLog) {
+      this.log(`STATUS: ${this.name} getCurrentPosition : ${reportCurrentPosition}${check99 ? ` (Actual ${this.currentPosition})` : ''}`);
+    }
     callback(null, reportCurrentPosition);
   },
   getTargetPosition: function (callback) {
@@ -250,7 +255,9 @@ MySmartBlindsBridgeAccessory.prototype = {
       reportTargetPosition = 0;
     }
 
-    this.log(`${this.name} getTargetPosition : ${reportTargetPosition}${check99 ? ` (Actual ${this.targetPosition})` : ''}`);
+    if (this.statusLog) {
+      this.log(`STATUS: ${this.name} getTargetPosition : ${reportTargetPosition}${check99 ? ` (Actual ${this.targetPosition})` : ''}`);
+    }
     this.service.setCharacteristic(Characteristic.PositionState, Characteristic.PositionState.STOPPED);
     callback(null, reportTargetPosition);
   },
