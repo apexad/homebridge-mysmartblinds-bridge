@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.1...v1.5.1) (2020-05-12)
+
+
+### Features
+
+* **plugin feature/config option:** add config option status_log to stop logging status functions ([a320e63](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a320e63e404099affebbdb42e5b2d1ef89aef12e))
+
+
 ## [1.5.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.4.1...v1.5.0) (2020-04-18)
 
 
