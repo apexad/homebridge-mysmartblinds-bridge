@@ -33,6 +33,10 @@
       "allow_debug": {
         "title": "Allow Debug Logs",
         "type": "boolean"
+      },
+      "status_log": {
+        "title": "Status Changed Logged",
+        "type": "boolean"
       }
     }
   },
@@ -41,6 +45,7 @@
     "username",
     "password",
     "closeUp",
+    "status_log",
     {
       "type": "fieldset",
       "expandable": true,
