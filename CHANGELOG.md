@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.2...v1.5.3) (2020-06-03)
+
+
+### Documentation
+
+* **config schema:** add informaton regarding bridge use by thus plugin ([750a027](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/750a0272dee5d982c7aaf01d0e3656fd38e0a51a))
+
 ## [1.5.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.1...v1.5.2) (2020-05-12)
 
 
