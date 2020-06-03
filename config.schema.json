@@ -1,6 +1,7 @@
 {
   "pluginAlias": "MySmartBlindsBridge",
   "pluginType": "platform",
+  "headerDisplay": "Currently this plugin uses the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub) (purchased separately from the blind automation kits) to control the blinds. If you don't have the bridge, check [homebridge-mysmartblinds](https://www.npmjs.com/package/homebridge-mysmartblinds) which uses bluetooh (this method may be integrated into this plugin at a later date).",
   "singular": true,
   "schema": {
     "type": "object",
@@ -35,7 +36,7 @@
         "type": "boolean"
       },
       "status_log": {
-        "title": "Status Changed Logged",
+        "title": "Status Change Logs",
         "type": "boolean"
       }
     }
@@ -45,14 +46,14 @@
     "username",
     "password",
     "closeUp",
-    "status_log",
     {
       "type": "fieldset",
       "expandable": true,
-      "title": "Advanced Settings",
-      "description": "Only needed under special circumstances",
+      "title": "Logs",
+      "description": "Only use if you are troubleshooting or want more information in the logs",
       "items": [
-        "allow_debug"
+        "allow_debug",
+        "status_log"
       ]
     }
   ]
