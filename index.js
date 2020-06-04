@@ -88,6 +88,7 @@ MySmartBlindsBridge.prototype = {
                   blinds {
                     name
                     encodedMacAddress
+                    encodedPasskey
                     roomId
                     deleted
                   }
@@ -109,7 +110,7 @@ MySmartBlindsBridge.prototype = {
               } = parsedBody.data.user;
 
               if (platform.allowDebug) {
-                platform.log('DEBUG', 'GetUserInfo', parsedBody);
+                platform.log('DEBUG', 'GetUserInfo', JSON.stringify(parsedBody));
               }
 
               const blindPromise = [];
@@ -140,7 +141,7 @@ MySmartBlindsBridge.prototype = {
                     rp(blind_options)
                       .then(function (parsedBody) {
                         if (platform.allowDebug) {
-                          platform.log('DEBUG', 'GetBlindsState', parsedBody)
+                          platform.log('DEBUG', 'GetBlindsState', JSON.stringify(parsedBody));
                         }
 
                         const blindState = parsedBody.data.blindsState[0];
