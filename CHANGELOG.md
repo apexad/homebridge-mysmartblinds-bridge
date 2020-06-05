@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.3...v1.5.4) (2020-06-04)
+
+
+### Documentation
+
+* **config schema:** remove old report99Open config option ([ea7adee](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ea7adee2b1a34fc9272f3db827609cc6eba64ea8))
+
+* **package.json:** add version script ([7c3e5bb](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/7c3e5bb3994e94ad3e830298047e8c57b7ebaec3))
+
+### Features
+
+* **plugin feature:** add encodedPasskey to logs, json stringify parsedBody in logs/closes #15 ([0552d31](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/0552d31fb03490c24ef6d648f83d1d8b6ea8cc33))
+
+* **plugin feature:** removed addAccessory ([8ca2d51](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/8ca2d5147d062fda1cbb655c2f1d5a4cc8d36dc5))
+
 ## [1.5.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.2...v1.5.3) (2020-06-03)
 
 
