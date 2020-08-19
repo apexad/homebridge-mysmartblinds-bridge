@@ -31,5 +31,15 @@
     "type": "git",
     "url": "git://github.com/apexad/homebridge-mysmartblinds-bridge.git"
   },
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.me/apexadm"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/apexad"
+    }
+  ]
   "license": "MIT"
 }
