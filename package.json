@@ -13,11 +13,11 @@
     "homebridge": ">=0.2.5"
   },
   "dependencies": {
-    "auth0": "^2.20.0",
+    "auth0": "^2.29.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "lodash": "^4.17.20",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {},
   "scripts": {
