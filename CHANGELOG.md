@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.6](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.4...v1.5.6) (2020-10-14)
+
+
+### Documentation
+
+* **package.json:** add funding link
+
+* **package.json:** update dependencies
+
 ## [1.5.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.3...v1.5.4) (2020-06-04)
 
 
