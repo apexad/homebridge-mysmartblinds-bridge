@@ -20,7 +20,7 @@ export class MySmartBlindsAccessory {
   batteryLevel: string;
   targetPosition: number;
   name: string;
-  closeUp!: boolean;
+  closeUp: boolean;
   macAddress: string;
 
   constructor(
@@ -35,6 +35,7 @@ export class MySmartBlindsAccessory {
     this.targetPosition = accessory.context.blind.blindPosition;
     this.positionState = this.platform.Characteristic.PositionState.STOPPED;
     this.statusLog = platform.config.statusLog || false;
+    this.closeUp = platform.config.closeUp || false;
 
     accessory.getService(this.platform.Service.AccessoryInformation)!
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'MySmartBlinds')
