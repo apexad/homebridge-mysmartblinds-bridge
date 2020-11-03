@@ -7,7 +7,7 @@
 [![npm](https://badgen.net/npm/v/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![npm](https://badgen.net/npm/dt/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
-[![donate](https://badgen.net/badge/donate/paypal/91BE09)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JS2VTL89E6VZ4&source=url)
+[![donate](https://badgen.net/badge/donate/paypal/91BE09)](https://www.paypal.me/apexadm)
 
 
 [Homebridge](https://github.com/homebridge/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub).  
@@ -31,8 +31,6 @@ This plugin is not affiliated with the MySmartBlinds product.
 This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
 To configure manually, add to the `platforms` section of homebridge's `config.json` after installing the plugin.
 
-**Command:** ```sudo npm install -g homebridge-mysmartblinds-bridge```
-
 **Config:**
 ```json
 {
@@ -50,8 +48,8 @@ Field                   | Description
 **username**            | MySmartBlinds app username (usually email address)
 **password**            | MySmartBlinds app password
 **closeUp**             | _(optional true/false, defaults to false)_ Blinds close in the upwards position
-**status_log**          | _(optional true/false, defaults to false)_ logs position changes
-**allow_debug**         | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
+**statusLog**           | _(optional true/false, defaults to false)_ logs position changes
+**allowDebug**          | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
