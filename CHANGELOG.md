@@ -7,8 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-* **bug fix:** fix closeUp ([f9a1882
-](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/f9a18827511f53c6c9042571d419b095c611d811))
+* **bug fix:** fix closeUp ([f9a1882](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/f9a18827511f53c6c9042571d419b095c611d811))
 
 ## [2.0.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.6...v2.0.0) (2020-11-02)
 
