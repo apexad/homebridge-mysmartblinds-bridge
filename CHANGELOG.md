@@ -25,14 +25,6 @@ All notable changes to this project will be documented in this file.
 * **plugin feature:** now a dynamic platform (which uses homeebridge cache) instead of a static platform
 * **plugin code change:** re-written fron the ground up to use typescript
 
-## [1.5.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.1...v1.5.2) (2020-05-12)
-
-
-### Features
-
-* **plugin feature/config option:** fix config schema ([8f7119a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/8f7119a9f996077bd4e37b5f0d8218f23985f12b)) closes [#12](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/12)
-
-
 ## [1.5.6](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v1.5.4...v1.5.6) (2020-10-14)
 
 
