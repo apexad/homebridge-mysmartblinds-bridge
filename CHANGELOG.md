@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.1..v2.0.2) (2020-11-06)
+
+### Features
+
+* **bug fix:** fix duplicate uuid/handle deleted blinds better (2db9d28](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/2db9d28cbbf62340a43ec856dce2c98d0411cdb9)
+
+
 ## [2.0.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.0..v2.0.1) (2020-11-02)
 
 
