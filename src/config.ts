@@ -5,3 +5,11 @@ export interface MySmartBlindsConfig {
     allowDebug?: boolean;
     statusLog?: boolean;
 }
+
+export interface MySmartBlindsBlind {
+    name: string;
+    encodedMacAddress: string;
+    encodedPasskey: string;
+    roomId: number;
+    deleted: boolean;
+}

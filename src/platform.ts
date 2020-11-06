@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { AuthenticationClient } from 'auth0';
-import {
-  findIndex,
-  differenceWith,
-} from 'lodash';
 import request from 'request-promise';
 import jwt from 'jsonwebtoken';
 
@@ -25,7 +21,10 @@ import {
   MYSMARTBLINDS_GRAPHQL,
   MYSMARTBLINDS_QUERIES,
 } from './settings';
-import { MySmartBlindsConfig } from './config';
+import {
+  MySmartBlindsConfig,
+  MySmartBlindsBlind,
+} from './config';
 import { MySmartBlindsAccessory } from './platformAccessory';
 
 export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
@@ -88,7 +87,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   }
 
   configureAccessory(accessory: PlatformAccessory) {
-    this.log.info('Loading accessory from cache:', accessory.displayName);
+    this.log.info('Loading blind from cache:', accessory.displayName);
     this.accessories.push(accessory);
   }
 
@@ -139,23 +138,19 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
       ))
         .then((response) => {
           if (platform.config.allowDebug) {
-            platform.log.info('DEBUG', 'GetUserInfo', response.data.user);
+            platform.log.debug('GetUserInfo', response.data.user);
           }
           const {
             rooms,
             blinds,
           } = response.data.user;
 
-          const notDeletedBlinds = blinds.filter(blind => !blind.deleted);
-          const deletedBlinds = differenceWith(
-            blinds.filter(blind => blind.deleted),
-            notDeletedBlinds,
-            (dBlind, nBlind) => dBlind.encodedMacAddress === nBlind.encodedMacAddress,
-          );
+          const activeBlinds = blinds.filter((blind: MySmartBlindsBlind) => !blind.deleted);
+          const deletedBlinds = blinds.filter((blind: MySmartBlindsBlind) => blind.deleted);
 
-          notDeletedBlinds.forEach((blind) => {
+          activeBlinds.forEach((blind: MySmartBlindsBlind) => {
             const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
-            const blindName = `${rooms[findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`;
+            const blindName = `${rooms.findIndex((room: { id: number }) => room.id === blind.roomId).name} ${blind.name}`;
 
             const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
             if (existingAccessory) {
@@ -164,7 +159,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
               platform.api.updatePlatformAccessories([existingAccessory]);
             } else {
             // the accessory does not yet exist, so we need to create it
-              platform.log.info('Adding new blind', blindName);
+              platform.log.info('Adding new blind:', blindName);
         
               // create a new accessory
               const accessory = new platform.api.platformAccessory(blindName, uuid);
@@ -193,10 +188,14 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
           deletedBlinds.forEach((blind) => {
             const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
             const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
+            const inActive = activeBlinds.findIndex(
+              (activeBlind: MySmartBlindsBlind) => blind.encodedMacAddress === activeBlind.encodedMacAddress,
+            ) > -1;
 
-            if (existingAccessory) {
+            if (existingAccessory && !inActive) {
+              platform.accessories.splice(platform.accessories.findIndex(acc => acc.UUID === existingAccessory.UUID), 1);
               platform.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
-              platform.log.info('Removing existing accessory from cache:', existingAccessory.displayName);
+              platform.log.info('Deleted blind from cache:', existingAccessory.displayName);
             }
           });
         });
