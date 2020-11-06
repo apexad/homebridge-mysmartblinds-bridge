@@ -2,6 +2,7 @@
 import { AuthenticationClient } from 'auth0';
 import {
   findIndex,
+  differenceWith,
 } from 'lodash';
 import request from 'request-promise';
 import jwt from 'jsonwebtoken';
@@ -145,21 +146,25 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
             blinds,
           } = response.data.user;
 
-          blinds.forEach((blind) => {
+          const notDeletedBlinds = blinds.filter(blind => !blind.deleted);
+          const deletedBlinds = differenceWith(
+            blinds.filter(blind => blind.deleted),
+            notDeletedBlinds,
+            (dBlind, nBlind) => dBlind.encodedMacAddress === nBlind.encodedMacAddress,
+          );
+
+          notDeletedBlinds.forEach((blind) => {
             const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
-            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
+            const blindName = `${rooms[findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`;
+
+            const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
             if (existingAccessory) {
-              if (!blind.deleted) {
-                new MySmartBlindsAccessory(platform, existingAccessory);
-                platform.api.updatePlatformAccessories([existingAccessory]);
-              } else {
-                platform.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
-                platform.log.info('Removing existing accessory from cache:', existingAccessory.displayName);
-              }
+              platform.log.debug('Restore cached blind:', blindName);
+              new MySmartBlindsAccessory(platform, existingAccessory);
+              platform.api.updatePlatformAccessories([existingAccessory]);
             } else {
             // the accessory does not yet exist, so we need to create it
-              const blindName = `${rooms[findIndex(rooms, { id: blind.roomId })].name} ${blind.name}`;
-              platform.log.info('Adding new accessory:', blindName);
+              platform.log.info('Adding new blind', blindName);
         
               // create a new accessory
               const accessory = new platform.api.platformAccessory(blindName, uuid);
@@ -182,8 +187,16 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                 new MySmartBlindsAccessory(platform, accessory);
         
                 platform.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
-                platform.accessories.push(accessory);
               }).catch((error) => platform.log.error(error));
+            }
+          });
+          deletedBlinds.forEach((blind) => {
+            const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
+            const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
+
+            if (existingAccessory) {
+              platform.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
+              platform.log.info('Removing existing accessory from cache:', existingAccessory.displayName);
             }
           });
         });
