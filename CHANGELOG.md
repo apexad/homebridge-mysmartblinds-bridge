@@ -2,11 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.2..v2.0.3) (2020-11-06)
+
+### Features
+
+* **cleanup:** cleanup deleted blind checking ([31dd73a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/31dd73ab821c6477ad858beaac743053c02ce35d))
+
+### Documentation
+
+* **package.json:** update dependencies/re-generate package-lock/remove lodash
+
+
 ## [2.0.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.1..v2.0.2) (2020-11-06)
 
 ### Features
 
-* **bug fix:** fix duplicate uuid/handle deleted blinds better (2db9d28](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/2db9d28cbbf62340a43ec856dce2c98d0411cdb9)
+* **bug fix:** fix duplicate uuid/handle deleted blinds better ([2db9d28](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/2db9d28cbbf62340a43ec856dce2c98d0411cdb9))
 
 
 ## [2.0.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.0..v2.0.1) (2020-11-02)
