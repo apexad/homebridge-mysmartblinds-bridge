@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@types/auth0-js": "^9.14.1",
+    "@types/request-promise": "^4.1.46",
     "auth0": "^2.29.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },
@@ -37,8 +37,7 @@
     "lint:fix": "eslint src/**.ts --max-warnings=0 --fix",
     "watch": "npm run build && npm link && nodemon",
     "build": "rimraf ./dist && tsc",
-    "prepublishOnly": "npm run lint && npm run build",
-    "version": "git add -A CHANGELOG.md"
+    "prepublishOnly": "npm run lint && npm run build"
   },
   "author": {
     "name": "Alex 'apexad' Martin"
