@@ -150,7 +150,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
 
           activeBlinds.forEach((blind: MySmartBlindsBlind) => {
             const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
-            const blindName = `${rooms.findIndex((room: { id: number }) => room.id === blind.roomId).name} ${blind.name}`;
+            const blindName = `${rooms.find((room: { id: number }) => room.id === blind.roomId).name} ${blind.name}`;
 
             const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
             if (existingAccessory) {
