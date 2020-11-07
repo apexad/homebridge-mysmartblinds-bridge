@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.3..v2.0.4) (2020-11-06)
+
+### Features
+
+* **bug fix:** fix blind/room name bug in 2.0.3
+
+
 ## [2.0.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.2..v2.0.3) (2020-11-06)
 
 ### Features
