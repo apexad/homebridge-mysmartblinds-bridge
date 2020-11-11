@@ -26,6 +26,7 @@ This plugin is not affiliated with the MySmartBlinds product.
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
 2. If switching to `closeUp` it's best to Open all blinds first and then restart homebridge
+3. If you see duplicate blinds, it is an issue in the app. Make sure to delete any 'disconnected'/invalid blinds. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
 
 ## Configuration
 This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
@@ -54,6 +55,7 @@ Field                   | Description
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
 [gregmichael](https://github.com/gregmichael) - sponsor and tester
+[name99-org](https://github.com/name99-org) - sponsor
 
 ## Code credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) - used to understand mysmartblinds bridge API  
