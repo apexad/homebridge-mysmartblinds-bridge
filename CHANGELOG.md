@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.1.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.0..v2.1.1) (2020-11-12)
+## [2.1.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.0..v2.1.1) (2020-11-12)
 
 ### Features
 
