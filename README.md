@@ -57,7 +57,7 @@ Field                   | Description
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
-[gregmichael](https://github.com/gregmichael) - sponsor and tester
+[gregmichael](https://github.com/gregmichael) - sponsor and tester  
 [name99-org](https://github.com/name99-org) - sponsor
 
 ## Code credits
