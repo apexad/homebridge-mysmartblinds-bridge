@@ -27,6 +27,7 @@ This plugin is not affiliated with the MySmartBlinds product.
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
 2. If switching to `closeUp` it's best to Open all blinds first and then restart homebridge
 3. If you see duplicate blinds, it is an issue in the app. Make sure to delete any 'disconnected'/invalid blinds. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
+4. Polling Interval will be ignored if the (auth0) API [Rate Limit Policy](https://auth0.com/docs/policies/rate-limit-policy) is reached
 
 ## Configuration
 This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
@@ -51,6 +52,7 @@ Field                   | Description
 **closeUp**             | _(optional true/false, defaults to false)_ Blinds close in the upwards position
 **statusLog**           | _(optional true/false, defaults to false)_ logs position changes
 **allowDebug**          | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
+**pollingInterval**     | _(optional)_ Polling Interval (in minutes)
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
@@ -61,3 +63,4 @@ mrferreira89 (reddit user) - primary tester/sponsor and provided project hardwar
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) - used to understand mysmartblinds bridge API  
 [Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) - used as an example of blind accessory  
 [crashtestoz/homebridge-http-window-blinds](https://github.com/crashtestoz/homebridge-http-window-blinds) - also used as an example of blind accessory
+[homebridge/homebridge-plugin-template](https://github.com/homebridge/homebridge-plugin-template) - v2.0 rewrite based on this template

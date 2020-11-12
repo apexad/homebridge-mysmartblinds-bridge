@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { AuthenticationClient } from 'auth0';
-import request from 'request-promise';
+import rp from 'request-promise';
 import jwt from 'jsonwebtoken';
 
 import {
@@ -112,7 +112,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                 Authorization: `Bearer ${platform.auth0Token}`,
               },
             };
-            platform.auth0TokenExpireDate = new Date(jwt.decode(authResult.id_token).exp * 1000).toISOString();
+            platform.auth0TokenExpireDate = new Date((jwt.decode(authResult.id_token)! as { exp: number }).exp * 1000).toISOString();
             if (platform.config.allowDebug) {
               platform.log.info(`auth0Token refresh, now expires ${platform.auth0TokenExpireDate}`);
             }
@@ -125,6 +125,15 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     });
   }
 
+  convertPosition(blindPosition: string) {
+    let convertedPosition = parseInt(blindPosition);
+
+    if (this.config.closeUp && convertedPosition > 100) {
+      convertedPosition = Math.abs(convertedPosition - 200);
+    }
+    return convertedPosition;
+  }
+
   discoverDevices() {
     this.authenticationClient = new AuthenticationClient(
       MYSMARTBLINDS_AUTH,
@@ -132,7 +141,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     const platform = this;
     platform.refreshAuthToken().then(() => {
       platform.auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);
-      request(Object.assign(
+      rp(Object.assign(
         platform.requestOptions,
         { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } },
       ))
@@ -163,15 +172,12 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         
               // create a new accessory
               const accessory = new platform.api.platformAccessory(blindName, uuid);
-              request(Object.assign(
+              rp(Object.assign(
                 platform.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {
                 const blindState = response.data.blindsState[0];
-                let homeKitBlindPosition = parseInt(blindState.position);
-                if (platform.config.closeUp && homeKitBlindPosition > 100) {
-                  homeKitBlindPosition = Math.abs(homeKitBlindPosition - 200);
-                }
+                const homeKitBlindPosition = platform.convertPosition(blindState.position);
                 accessory.context.blind = {
                   name: blindName,
                   macAddress: blind.encodedMacAddress,
