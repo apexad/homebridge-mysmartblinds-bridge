@@ -26,7 +26,7 @@ This plugin is not affiliated with the MySmartBlinds product.
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
 2. If switching to `closeUp` it's best to Open all blinds first and then restart homebridge
-3. If you see duplicate blinds, it is an issue in the app. Make sure to delete any 'disconnected'/invalid blinds. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
+3. If you see duplicate blinds, make sure to delete any 'disconnected'/invalid blinds within the iOS/Android app. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
 4. Polling Interval will be ignored if the (auth0) API [Rate Limit Policy](https://auth0.com/docs/policies/rate-limit-policy) is reached
 
 ## Configuration
