@@ -22,6 +22,7 @@ This plugin is not affiliated with the MySmartBlinds product.
 4. Issues a low battery indicator if battery is below 20%
 5. Logging (via Homebridge) of all actions done
 6. Blinds can close down or up (via config option)
+7. Polling so that blinds update if changed outside of HomeKit
 
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
@@ -56,7 +57,7 @@ Field                   | Description
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
-[gregmichael](https://github.com/gregmichael) - sponsor and tester
+[gregmichael](https://github.com/gregmichael) - sponsor and tester  
 [name99-org](https://github.com/name99-org) - sponsor
 
 ## Code credits
