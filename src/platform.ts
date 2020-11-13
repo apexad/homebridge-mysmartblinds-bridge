@@ -117,7 +117,10 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                 Authorization: `Bearer ${platform.auth0Token}`,
               },
             };
-            platform.auth0TokenExpireDate = new Date((jwt.decode(authResult.id_token!)! as { exp: number }).exp * 1000).toISOString();
+
+            platform.auth0TokenExpireDate = new Date(
+              (jwt.decode(authResult.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000,
+            ).toISOString();
             if (platform.config.allowDebug) {
               platform.log.info(`auth0Token refresh, now expires ${platform.auth0TokenExpireDate}`);
             }
