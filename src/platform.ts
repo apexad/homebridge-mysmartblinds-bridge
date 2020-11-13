@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { AuthenticationClient } from 'auth0';
+import {
+  AuthenticationClient,
+  SignInToken,
+} from 'auth0';
 import rp from 'request-promise';
 import jwt from 'jsonwebtoken';
 
@@ -32,9 +35,9 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
 
   public readonly accessories: PlatformAccessory[] = [];
-  auth0Token!: string;
+  auth0Token!: string | undefined;
   auth0TokenInterval?: NodeJS.Timeout;
-  authenticationClient: AuthenticationClient;
+  authenticationClient!: AuthenticationClient;
   requestOptions!: {
     method: string;
     uri: string;
@@ -67,6 +70,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     /* setup config */
     this.config = config;
     this.log = log;
+    this.authenticationClient = new AuthenticationClient(MYSMARTBLINDS_AUTH);
 
     try {
       if (!this.config.username) {
@@ -78,6 +82,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     } catch(err) {
       this.log.error(err);
     }
+
     this.log.debug('Finished initializing platform:', this.config.name);
 
     this.api.on('didFinishLaunching', () => {
@@ -95,13 +100,13 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     const platform = this;
 
     return new Promise((resolve, reject) => {
-      platform.authenticationClient.database.signIn(
+      platform.authenticationClient?.database?.signIn(
         Object.assign(
           {},
           MYSMARTBLINDS_OPTIONS,
           { username: platform.config.username, password: platform.config.password },
         ),
-        (err: never, authResult: { id_token: string }) => {
+        (err: Error, authResult: SignInToken) => {
           if (authResult) {
             platform.auth0Token = authResult.id_token;
             platform.requestOptions = {
@@ -112,7 +117,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                 Authorization: `Bearer ${platform.auth0Token}`,
               },
             };
-            platform.auth0TokenExpireDate = new Date((jwt.decode(authResult.id_token)! as { exp: number }).exp * 1000).toISOString();
+            platform.auth0TokenExpireDate = new Date((jwt.decode(authResult.id_token!)! as { exp: number }).exp * 1000).toISOString();
             if (platform.config.allowDebug) {
               platform.log.info(`auth0Token refresh, now expires ${platform.auth0TokenExpireDate}`);
             }
@@ -135,9 +140,6 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   }
 
   discoverDevices() {
-    this.authenticationClient = new AuthenticationClient(
-      MYSMARTBLINDS_AUTH,
-    );
     const platform = this;
     platform.refreshAuthToken().then(() => {
       platform.auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);

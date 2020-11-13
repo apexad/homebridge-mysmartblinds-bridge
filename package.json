@@ -20,7 +20,7 @@
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
-    "@types/auth0-js": "^9.14.1",
+    "@types/auth0": "^2.20.9",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/request-promise": "^4.1.46",
     "@types/node": "^14.11.8",
