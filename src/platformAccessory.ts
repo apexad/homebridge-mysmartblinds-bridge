@@ -99,6 +99,7 @@ export class MySmartBlindsAccessory {
     this.platform.log.info(`${this.name} setTargetPosition to ${value}`);
 
     rp(Object.assign(
+      {},
       this.platform.requestOptions,
       {
         body: {
@@ -108,6 +109,7 @@ export class MySmartBlindsAccessory {
             blinds: this.macAddress,
           },
         },
+        resolveWithFullResponse: true,
       },
     ))
       .then((response) => {
@@ -131,6 +133,7 @@ export class MySmartBlindsAccessory {
       this.platform.log.info(`Refresh blind ${this.name}`);
     }
     rp(Object.assign(
+      {},
       this.platform.requestOptions,
       {
         body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: this.macAddress } },

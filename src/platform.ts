@@ -147,6 +147,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     platform.refreshAuthToken().then(() => {
       platform.auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);
       rp(Object.assign(
+        {},
         platform.requestOptions,
         { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } },
       ))
@@ -178,6 +179,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
               // create a new accessory
               const accessory = new platform.api.platformAccessory(blindName, uuid);
               rp(Object.assign(
+                {},
                 platform.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {
