@@ -26,6 +26,7 @@ import {
 } from './settings';
 import {
   MySmartBlindsConfig,
+  MySmartBlindsAuth,
   MySmartBlindsBlind,
 } from './config';
 import { MySmartBlindsAccessory } from './platformAccessory';
@@ -55,6 +56,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   };
   
   auth0TokenExpireDate?: string;
+  auth!: MySmartBlindsAuth;
 
   constructor(
     public readonly log: Logger,
@@ -79,6 +81,10 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
       if (!this.config.password) {
         throw new Error('MySmartBlinds Bridge - You must provide a password');
       }
+      this.auth = {
+        username: this.config.username,
+        password: this.config.password,
+      };
     } catch(err) {
       this.log.error(err);
     }
@@ -104,7 +110,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         Object.assign(
           {},
           MYSMARTBLINDS_OPTIONS,
-          { username: platform.config.username, password: platform.config.password },
+          platform.auth,
         ),
         (err: Error, authResult: SignInToken) => {
           if (authResult) {
@@ -147,7 +153,6 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     platform.refreshAuthToken().then(() => {
       platform.auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);
       rp(Object.assign(
-        {},
         platform.requestOptions,
         { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } },
       ))
@@ -179,7 +184,6 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
               // create a new accessory
               const accessory = new platform.api.platformAccessory(blindName, uuid);
               rp(Object.assign(
-                {},
                 platform.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {

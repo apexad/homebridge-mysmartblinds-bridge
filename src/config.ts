@@ -1,10 +1,15 @@
 export interface MySmartBlindsConfig {
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
     closeUp?: boolean;
     allowDebug?: boolean;
     statusLog?: boolean;
     pollingInterval?: number;
+}
+
+export interface MySmartBlindsAuth {
+    username: string;
+    password: string;
 }
 
 export interface MySmartBlindsBlind {
