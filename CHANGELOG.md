@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.1..v2.1.2) (2020-11-15)
+
+### Features
+
+* **bugfix:** cleaned up the code a bit, using corret types for auth0 (login)
+* **bugfix:** corrected reuest calls so that blind is controllable before refresh
+
+### Documentation
+
+* **documentation:** update changelog to be in version sync again
+* **documentatin:** added polling to feature list in the README
+
+
+
 ## [2.1.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.0..v2.1.1) (2020-11-12)
 
 ### Features
