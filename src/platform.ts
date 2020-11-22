@@ -112,9 +112,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
               method: 'POST',
               uri: MYSMARTBLINDS_GRAPHQL,
               json: true,
-              headers: {
-                Authorization: `Bearer ${this.auth0Token}`,
-              },
+              headers: { Authorization: `Bearer ${this.auth0Token}` },
             };
 
             this.auth0TokenExpireDate = new Date(
@@ -144,7 +142,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   discoverDevices() {
     this.refreshAuthToken().then(() => {
       this.auth0TokenInterval = setInterval(this.refreshAuthToken.bind(this), 1000 * 60 * 60 * 8);
-      rp(Object.assign(this.requestOptions, { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } }))
+      rp(Object.assign({}, this.requestOptions, { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } }))
         .then((response) => {
           if (this.config.allowDebug) {
             this.log.debug('GetUserInfo', response.data.user);
@@ -173,6 +171,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
               // create a new accessory
               const accessory = new this.api.platformAccessory(blindName, uuid);
               rp(Object.assign(
+                {},
                 this.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {
