@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
 import {
   AuthenticationClient,
   SignInToken,
@@ -103,32 +102,26 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   }
 
   refreshAuthToken() {
-    const platform = this;
-
     return new Promise((resolve, reject) => {
-      platform.authenticationClient?.database?.signIn(
-        Object.assign(
-          {},
-          MYSMARTBLINDS_OPTIONS,
-          platform.auth,
-        ),
+      this.authenticationClient?.database?.signIn(
+        Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
         (err: Error, authResult: SignInToken) => {
           if (authResult) {
-            platform.auth0Token = authResult.id_token;
-            platform.requestOptions = {
+            this.auth0Token = authResult.id_token;
+            this.requestOptions = {
               method: 'POST',
               uri: MYSMARTBLINDS_GRAPHQL,
               json: true,
               headers: {
-                Authorization: `Bearer ${platform.auth0Token}`,
+                Authorization: `Bearer ${this.auth0Token}`,
               },
             };
 
-            platform.auth0TokenExpireDate = new Date(
+            this.auth0TokenExpireDate = new Date(
               (jwt.decode(authResult.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000,
             ).toISOString();
-            if (platform.config.allowDebug) {
-              platform.log.info(`auth0Token refresh, now expires ${platform.auth0TokenExpireDate}`);
+            if (this.config.allowDebug) {
+              this.log.info(`auth0Token refresh, now expires ${this.auth0TokenExpireDate}`);
             }
             resolve();
           } else if (err) {
@@ -149,16 +142,12 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   }
 
   discoverDevices() {
-    const platform = this;
-    platform.refreshAuthToken().then(() => {
-      platform.auth0TokenInterval = setInterval(platform.refreshAuthToken.bind(platform), 1000 * 60 * 60 * 8);
-      rp(Object.assign(
-        platform.requestOptions,
-        { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } },
-      ))
+    this.refreshAuthToken().then(() => {
+      this.auth0TokenInterval = setInterval(this.refreshAuthToken.bind(this), 1000 * 60 * 60 * 8);
+      rp(Object.assign(this.requestOptions, { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } }))
         .then((response) => {
-          if (platform.config.allowDebug) {
-            platform.log.debug('GetUserInfo', response.data.user);
+          if (this.config.allowDebug) {
+            this.log.debug('GetUserInfo', response.data.user);
           }
           const {
             rooms,
@@ -169,26 +158,26 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
           const deletedBlinds = blinds.filter((blind: MySmartBlindsBlind) => blind.deleted);
 
           activeBlinds.forEach((blind: MySmartBlindsBlind) => {
-            const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
+            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress);
             const blindName = `${rooms.find((room: { id: number }) => room.id === blind.roomId).name} ${blind.name}`;
 
-            const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
+            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
             if (existingAccessory) {
-              platform.log.debug('Restore cached blind:', blindName);
-              new MySmartBlindsAccessory(platform, existingAccessory);
-              platform.api.updatePlatformAccessories([existingAccessory]);
+              this.log.debug('Restore cached blind:', blindName);
+              new MySmartBlindsAccessory(this, existingAccessory);
+              this.api.updatePlatformAccessories([existingAccessory]);
             } else {
             // the accessory does not yet exist, so we need to create it
-              platform.log.info('Adding new blind:', blindName);
+              this.log.info('Adding new blind:', blindName);
         
               // create a new accessory
-              const accessory = new platform.api.platformAccessory(blindName, uuid);
+              const accessory = new this.api.platformAccessory(blindName, uuid);
               rp(Object.assign(
-                platform.requestOptions,
+                this.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {
                 const blindState = response.data.blindsState[0];
-                const homeKitBlindPosition = platform.convertPosition(blindState.position);
+                const homeKitBlindPosition = this.convertPosition(blindState.position);
                 accessory.context.blind = {
                   name: blindName,
                   macAddress: blind.encodedMacAddress,
@@ -196,23 +185,23 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                   batteryLevel: blindState.batteryLevel as number,
                 };
         
-                new MySmartBlindsAccessory(platform, accessory);
+                new MySmartBlindsAccessory(this, accessory);
         
-                platform.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
-              }).catch((error) => platform.log.error(error));
+                this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+              }).catch((error) => this.log.error(error));
             }
           });
           deletedBlinds.forEach((blind) => {
-            const uuid = platform.api.hap.uuid.generate(blind.encodedMacAddress);
-            const existingAccessory = platform.accessories.find(accessory => accessory.UUID === uuid);
+            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress);
+            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
             const inActive = activeBlinds.findIndex(
               (activeBlind: MySmartBlindsBlind) => blind.encodedMacAddress === activeBlind.encodedMacAddress,
             ) > -1;
 
             if (existingAccessory && !inActive) {
-              platform.accessories.splice(platform.accessories.findIndex(acc => acc.UUID === existingAccessory.UUID), 1);
-              platform.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
-              platform.log.info('Deleted blind from cache:', existingAccessory.displayName);
+              this.accessories.splice(this.accessories.findIndex(acc => acc.UUID === existingAccessory.UUID), 1);
+              this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
+              this.log.info('Deleted blind from cache:', existingAccessory.displayName);
             }
           });
         });
