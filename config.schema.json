@@ -1,7 +1,7 @@
 {
   "pluginAlias": "MySmartBlindsBridge",
   "pluginType": "platform",
-  "headerDisplay": "This plugin uses the [MySmartBlinds Smart Bridge](https://www.mysmartblinds.com/products/smart-hub) (sold separately from blind automation kits) to control the blinds. If you don't have the bridge, check [homebridge-mysmartblinds](https://www.npmjs.com/package/homebridge-mysmartblinds) which uses bluetooh directly to the blinds.",
+  "headerDisplay": "This plugin uses the [MySmartBlinds Smart Bridge](https://www.tiltsmarthome.com/products/smart-hub?variant=31506970148929) (sold separately from blind automation kits) to control the blinds. If you don't have the bridge, check [homebridge-mysmartblinds](https://www.npmjs.com/package/homebridge-mysmartblinds) which uses bluetooh directly to the blinds.",
   "singular": true,
   "schema": {
     "type": "object",
