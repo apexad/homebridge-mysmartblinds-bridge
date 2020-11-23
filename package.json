@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
+    "prompt": "^1.0.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },
@@ -37,6 +38,7 @@
     "lint:fix": "eslint src/**.ts --max-warnings=0 --fix",
     "watch": "npm run build && npm link && nodemon",
     "build": "rimraf ./dist && tsc",
+    "test:mysmartblinds-login": "npm run build && node ./dist/test.js",
     "prepublishOnly": "npm run lint && npm run build"
   },
   "author": {

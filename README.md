@@ -55,6 +55,14 @@ Field                   | Description
 **allowDebug**          | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
 **pollingInterval**     | _(optional)_ Polling Interval (in minutes)
 
+## Testing
+If you need to test your MySmartBlinds credentials are working outside of homebridge:  
+1. Clone this repo
+2. Run `npm install`
+3. Run `num run test:mysmartblinds-login`
+4. Enter `username`
+5. Enter `password` (text will be hidden for safety)
+
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
 [gregmichael](https://github.com/gregmichael) - sponsor and tester  
