@@ -1,18 +1,21 @@
+/* Plugin Infrmation */
 export const PLATFORM_NAME = 'MySmartBlindsBridge';
 export const PLUGIN_NAME = 'homebridge-mysmartblinds-bridge';
-export const MYSMARTBLINDS_AUTH = {
-  domain: 'mysmartblinds.auth0.com',
-  clientId: '1d1c3vuqWtpUt1U577QX5gzCJZzm8WOB',
-};
+
+/* MySmartBlinds App Settings */
+export const MYSMARTBLINDS_DOMAIN = 'mysmartblinds.auth0.com';
 
 export const MYSMARTBLINDS_OPTIONS = {
-  device: 'smartblinds_client',
   scope: 'openid offline_access',
-  realm: 'Username-Password-Authentication',
+  grant_type: 'password',
+  client_id: '1d1c3vuqWtpUt1U577QX5gzCJZzm8WOB',
+  connection: 'Username-Password-Authentication',
+  device: 'MySmartBlinds Homebridge',
 };
 
 export const MYSMARTBLINDS_GRAPHQL = 'https://api.mysmartblinds.com/v1/graphql';
 
+/* MySmartBlinds Queries */
 export const MYSMARTBLINDS_QUERIES = {
   GetUserInfo: `
     query GetUserInfo {
