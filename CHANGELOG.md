@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.2..v2.2.0) (2020-11-15)
+
+### Features
+
+* **plugin code(testing too):** add test:mysmartblinds-login script for testing ([231a44c](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/231a44c7a6ab8eacf31a3b521804c84345eeab62))
+
+### Code Changes (No change in functionality)
+
+* **plugin code:** code cleanup ([ad53a22](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ad53a22a839de5bfbf4f317c484e9c511d4af008), [cd79242](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/cd79242090f5472b7796192cc178cdf29434e7d6))
+* **plugin code:** remove auth0, switch to request call ([ee0e24f](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ee0e24f3b8f6196c3c80911ccf99814c62034aac))
+
+### Documentation
+
+* **package.json:** Update engines for Node 14.x and Homebridge 1.1.x ([06a6aad](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/06a6aad3d095b661749fb8c1d3871ef6d77ebc6b))
+* **github:** Add dependabot ([09d4622](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/09d4622b823237ec13d0640c548011cff8e66100))
+* **github:** Create issue no response configuration ([98571b9](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/98571b999cd3a210da4cf7d83348d330bb17db37))
+* **readme:** correct link to smart bridge (for mysmartblinds) ([c6bb143](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/c6bb143e1112b330e539c5a42ad7368d0c1c9254))
+
+
+
 ## [2.1.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.1..v2.1.2) (2020-11-15)
 
 ### Features
@@ -15,7 +35,6 @@ All notable changes to this project will be documented in this file.
 * **documentatin:** added polling to feature list in the README
 
 
-
 ## [2.1.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.0..v2.1.1) (2020-11-12)
 
 ### Features
@@ -27,7 +46,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-* **feature:** adds polling via pollingInterval config [a0de8b1](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a0de8b1387b415dcda26dc72717e981f995d361c)
+* **feature:** adds polling via pollingInterval config ([a0de8b1](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/a0de8b1387b415dcda26dc72717e981f995d361c))
 
 
 ## [2.0.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.0.3..v2.0.4) (2020-11-06)
