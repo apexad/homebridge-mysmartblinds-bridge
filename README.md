@@ -56,12 +56,7 @@ Field                   | Description
 **pollingInterval**     | _(optional)_ Polling Interval (in minutes)
 
 ## Testing
-If you need to test your MySmartBlinds credentials are working outside of homebridge:  
-1. Clone this repo
-2. Run `npm install`
-3. Run `num run test:mysmartblinds-login`
-4. Enter `username`
-5. Enter `password` (text will be hidden for safety)
+Use `npx homebridge-mysmartblinds-bridge` to test your credentials.
 
 ## Sponsors
 mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  

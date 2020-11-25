@@ -52,6 +52,9 @@
     "url": "https://github.com/apexad/homebridge-mysmartblinds-bridge/issues"
   },
   "main": "dist/index.js",
+  "bin": {
+    "homebridge-mysmartblinds-bridge": "./test.js"
+  },
   "funding": [
     {
       "type": "paypal",
