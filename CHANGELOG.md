@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 * **plugin code:** code cleanup ([ad53a22](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ad53a22a839de5bfbf4f317c484e9c511d4af008), [cd79242](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/cd79242090f5472b7796192cc178cdf29434e7d6))
 * **plugin code:** remove auth0, switch to request call ([ee0e24f](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/ee0e24f3b8f6196c3c80911ccf99814c62034aac))
+* **packge.json:** update depdendencies ([277e5f1](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/277e5f172af5c7b916c569d1d10ac13e1c3b3d55), [d3486e1](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/d3486e1fd0c0491bd83cea5f6e7390e2b8ccad1f), etc...)
 
 ### Documentation
 
