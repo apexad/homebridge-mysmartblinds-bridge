@@ -13,6 +13,13 @@ export const MYSMARTBLINDS_OPTIONS = {
   device: 'MySmartBlinds Homebridge',
 };
 
+export const MYSMARTBLINDS_HEADERS = {
+  headers: {
+    'User-Agent': 'MySmartBlinds/2.3.3 (iPhone; iOS 14.2; Scale/2.00',
+    'auth0-client-id': MYSMARTBLINDS_OPTIONS.client_id,
+  },
+};
+
 export const MYSMARTBLINDS_GRAPHQL = 'https://api.mysmartblinds.com/v1/graphql';
 
 /* MySmartBlinds Queries */

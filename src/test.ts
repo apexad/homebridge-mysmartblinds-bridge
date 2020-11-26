@@ -4,6 +4,7 @@ import prompt from 'prompt';
 import {
   MYSMARTBLINDS_DOMAIN,
   MYSMARTBLINDS_OPTIONS,
+  MYSMARTBLINDS_HEADERS,
   MYSMARTBLINDS_GRAPHQL,
   MYSMARTBLINDS_QUERIES,
 } from './settings';
@@ -25,12 +26,17 @@ prompt.get(['username', {name: 'password', hidden: true }], (err: Error, result:
         password: result.password,
       },
     ),
+    headers: MYSMARTBLINDS_HEADERS,
   }).then((response) => {
     rp({
       method: 'POST',
       uri: MYSMARTBLINDS_GRAPHQL,
       json: true,
-      headers: { Authorization: `Bearer ${response.id_token}` },
+      headers: Object.assign(
+        {},
+        MYSMARTBLINDS_HEADERS,
+        { Authorization: `Bearer ${response.id_token}` },
+      ),
       body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null },
     }).then((response) => {
       console.log(response.data.user);

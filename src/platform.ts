@@ -16,6 +16,7 @@ import {
   PLUGIN_NAME,
   MYSMARTBLINDS_DOMAIN,
   MYSMARTBLINDS_OPTIONS,
+  MYSMARTBLINDS_HEADERS,
   MYSMARTBLINDS_GRAPHQL,
   MYSMARTBLINDS_QUERIES,
 } from './settings';
@@ -111,7 +112,11 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,
         json: true,
-        headers: { Authorization: `Bearer ${this.authToken}` },
+        headers: Object.assign(
+          {},
+          MYSMARTBLINDS_HEADERS,
+          { Authorization: `Bearer ${this.authToken}` },
+        ),
       };
 
       this.authTokenExpireDate = new Date(
