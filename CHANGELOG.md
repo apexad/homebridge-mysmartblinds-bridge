@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.2](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.1..v2.2.2) (2020-11-25)
+
+### Features
+
+* **errors:** silence error messages, just display sttus code ([92fd3e6](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/92fd3e69bfa90fd7885a3540f6b571870e5f3af2))
+* **headers:** fix headers, send user agent ([bcf5c1c](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/bcf5c1cd50b3e2602fee90abdca705ef7df48b1b))
+
+### Code Changes (No change in functionality)
+
+* **plugin code:** fix npx/bin to run login test (add test file runner for npx) ([7912e8f](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/7912e8f4c4301d0cb25b44522da0d5d2bf4d4728))
+
+
+## [2.2.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.0..v2.2.1) (2020-11-25)
+
+### Features
+
+* **plugin code:** add npx/bin to run login test ([501c8c1](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/501c8c17f99b3881dfe8ec7e0ca646baadba2ae4))
+
 ## [2.2.0](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.1.2..v2.2.0) (2020-11-25)
 
 ### Features
