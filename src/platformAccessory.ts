@@ -123,7 +123,7 @@ export class MySmartBlindsAccessory {
         callback(null);
       })
       .catch((err) => {
-        this.platform.log.error(`${this.name} setTargetPosition ERROR`, err);
+        this.platform.log.error(`${this.name} setTargetPosition ERROR`, err.statusCode);
         callback(null);
       });
   }
@@ -149,6 +149,6 @@ export class MySmartBlindsAccessory {
         this.platform.log.warn(`Rate Limit reached, refresh for ${this.name} delay to ${new Date(response.headers['x-ratelimit-reset'])}`);
       }
       setTimeout(() => this.refreshBlind(), refreshBlindTimeOut);
-    }).catch((error) => this.platform.log.error(error));
+    }).catch((err) => this.platform.log.error(`${this.name} refreshBlind ERROR`, err.statusCode));
   }
 }
