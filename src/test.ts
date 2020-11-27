@@ -39,7 +39,7 @@ prompt.get(['username', {name: 'password', hidden: true }], (err: Error, result:
       ),
       body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null },
     }).then((response) => {
-      console.log(response.data.user);
+      console.log(JSON.stringify(response.data));
     });
   });
 });
