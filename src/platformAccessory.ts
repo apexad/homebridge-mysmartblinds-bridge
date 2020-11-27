@@ -43,7 +43,7 @@ export class MySmartBlindsAccessory {
 
     this.service.getCharacteristic(this.platform.Characteristic.TargetPosition)
       .on('set', this.setTargetPosition.bind(this));
-    this.updatePosition(accessory.context.blindPosition);
+    this.updatePosition(accessory.context.blind.blindPosition);
 
     this.batteryService = accessory.getService(this.platform.Service.BatteryService)
     || accessory.addService(this.platform.Service.BatteryService, `${this.name} Battery`, `${this.macAddress} Battery`);
