@@ -47,7 +47,7 @@ export class MySmartBlindsAccessory {
 
     this.batteryService = accessory.getService(this.platform.Service.BatteryService)
     || accessory.addService(this.platform.Service.BatteryService, `${this.name} Battery`, `${this.macAddress} Battery`);
-    this.updateBattery(accessory.context.batteryLevel);
+    this.updateBattery(accessory.context.blind.batteryLevel);
     
     this.accessory = accessory;
 
