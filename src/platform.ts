@@ -106,8 +106,8 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         headers: Object.assign({}, MYSMARTBLINDS_HEADERS, { Authorization: `Bearer ${this.authToken}` }),
       };
 
-      const authTokenExpireDate = new Date((jwt.decode(response.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000).toISOString();
       if (this.config.allowDebug) {
+        const authTokenExpireDate = new Date((jwt.decode(response.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000).toISOString();
         this.log.info(`authToken refresh, now expires ${authTokenExpireDate}`);
       }
     });
