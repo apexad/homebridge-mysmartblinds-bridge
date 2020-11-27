@@ -37,8 +37,7 @@ export class MySmartBlindsAccessory {
       .setCharacteristic(this.platform.Characteristic.Model, 'Blind')
       .setCharacteristic(this.platform.Characteristic.SerialNumber, this.macAddress);
 
-    this.service = accessory.getService(this.platform.Service.WindowCovering)
-    || accessory.addService(this.platform.Service.WindowCovering);
+    this.service = accessory.getService(this.platform.Service.WindowCovering) || accessory.addService(this.platform.Service.WindowCovering);
 
     this.service.setCharacteristic(this.platform.Characteristic.Name, this.name);
 
@@ -104,10 +103,7 @@ export class MySmartBlindsAccessory {
       {
         body: {
           query: MYSMARTBLINDS_QUERIES.UpdateBlindsPosition,
-          variables: {
-            position: this.closeUp ? (Math.abs(targetPosition - 200)) : targetPosition,
-            blinds: this.macAddress,
-          },
+          variables: { position: this.closeUp ? (Math.abs(targetPosition - 200)) : targetPosition, blinds: this.macAddress },
         },
         resolveWithFullResponse: true,
       },
@@ -135,10 +131,7 @@ export class MySmartBlindsAccessory {
     rp(Object.assign(
       {},
       this.platform.requestOptions,
-      {
-        body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: this.macAddress } },
-        resolveWithFullResponse: true,
-      },
+      { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: this.macAddress } }, resolveWithFullResponse: true },
     )).then((response) => {
       const blindState = response.body.data.blindsState[0];
       this.updatePosition(this.platform.convertPosition(blindState.position));

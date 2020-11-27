@@ -1,6 +1,5 @@
 import rp from 'request-promise';
 import jwt from 'jsonwebtoken';
-
 import {
   API,
   DynamicPlatformPlugin,
@@ -10,7 +9,6 @@ import {
   Service,
   Characteristic,
 } from 'homebridge';
-
 import {
   PLATFORM_NAME,
   PLUGIN_NAME,
@@ -30,8 +28,8 @@ import { MySmartBlindsAccessory } from './platformAccessory';
 export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service = this.api.hap.Service;
   public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
-
   public readonly accessories: PlatformAccessory[] = [];
+  auth!: MySmartBlindsAuth;
   authToken!: string | undefined;
   authTokenInterval?: NodeJS.Timeout;
   requestOptions!: {
@@ -50,9 +48,6 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
     };
   };
   
-  authTokenExpireDate?: string;
-  auth!: MySmartBlindsAuth;
-
   constructor(
     public readonly log: Logger,
     public readonly config: PlatformConfig & MySmartBlindsConfig,
@@ -101,29 +96,19 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
       method: 'POST',
       uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/ro`,
       json: true,
-      body: Object.assign(
-        {},
-        MYSMARTBLINDS_OPTIONS,
-        this.auth,
-      ),
+      body: Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
     }).then((response) => {
       this.authToken = response.id_token;
       this.requestOptions = {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,
         json: true,
-        headers: Object.assign(
-          {},
-          MYSMARTBLINDS_HEADERS,
-          { Authorization: `Bearer ${this.authToken}` },
-        ),
+        headers: Object.assign({}, MYSMARTBLINDS_HEADERS, { Authorization: `Bearer ${this.authToken}` }),
       };
 
-      this.authTokenExpireDate = new Date(
-        (jwt.decode(response.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000,
-      ).toISOString();
+      const authTokenExpireDate = new Date((jwt.decode(response.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000).toISOString();
       if (this.config.allowDebug) {
-        this.log.info(`authToken refresh, now expires ${this.authTokenExpireDate}`);
+        this.log.info(`authToken refresh, now expires ${authTokenExpireDate}`);
       }
     });
   }
