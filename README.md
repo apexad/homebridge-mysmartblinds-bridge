@@ -11,7 +11,7 @@
 
 
 [Homebridge](https://github.com/homebridge/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.tiltsmarthome.com/products/smart-hub?variant=31506970148929).  
-Configure your blinds and bridge with the official iOS or Android app first in order to use this homebridge plugin.
+Configure your blinds and bridge with the official iOS or Android app first in order to use this Homebridge plugin.
 
 This plugin is not affiliated with the MySmartBlinds product.
 
@@ -26,13 +26,13 @@ This plugin is not affiliated with the MySmartBlinds product.
 
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
-2. If switching to `closeUp` it's best to Open all blinds first and then restart homebridge
+2. If switching to `closeUp` it's best to Open all blinds first and then restart Homebridge
 3. If you see duplicate blinds, make sure to delete any 'disconnected'/invalid blinds within the iOS/Android app. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
 4. Polling Interval will be ignored if the (auth0) API [Rate Limit Policy](https://auth0.com/docs/policies/rate-limit-policy) is reached
 
 ## Configuration
 This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
-To configure manually, add to the `platforms` section of homebridge's `config.json` after installing the plugin.
+To configure manually, add to the `platforms` section of Homebridge's `config.json` after installing the plugin.
 
 **Config:**
 ```json
