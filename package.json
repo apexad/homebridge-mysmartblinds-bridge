@@ -1,7 +1,7 @@
 {
   "name": "homebridge-mysmartblinds-bridge",
   "displayName": "Homebridge MySmartBlinds Bridge",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Homebrige plugin for mysmartblinds (using hardware bridge)",
   "keywords": [
     "homebridge-plugin",
