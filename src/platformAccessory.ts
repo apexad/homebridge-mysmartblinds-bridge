@@ -4,6 +4,7 @@ import {
   CharacteristicValue,
   CharacteristicSetCallback,
 } from 'homebridge';
+import { report } from 'process';
 import rp from 'request-promise';
 import { MySmartBlindsBridgePlatform } from './platform';
 import { MYSMARTBLINDS_QUERIES } from './settings';
@@ -65,7 +66,7 @@ export class MySmartBlindsAccessory {
     if (reportCurrentPosition === 99) {
       reportCurrentPosition = 100;
     }
-    if (reportCurrentPosition === 1) {
+    if (reportCurrentPosition === 1 || reportCurrentPosition === -1) {
       reportCurrentPosition = 0;
     }
     if (this.statusLog) {
