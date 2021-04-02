@@ -4,7 +4,6 @@ import {
   CharacteristicValue,
   CharacteristicSetCallback,
 } from 'homebridge';
-import { report } from 'process';
 import rp from 'request-promise';
 import { MySmartBlindsBridgePlatform } from './platform';
 import { MYSMARTBLINDS_QUERIES } from './settings';
