@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.5](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.4...v2.2.5) (2021-04-02)
+
+
+### Bug Fixes
+
+* stop warning about current position being -1 ([afd31df](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/afd31df1a901801eba677dd042e6738ed9760d12))
+* update dependencies ([da48799](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/da48799d1e92e3d556a71af9a896dea20b95e2fe))
+
 ### [2.2.4](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.3...v2.2.4) (2020-12-03)
 
 ### [2.2.3](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.2...v2.2.3) (2020-11-27)
