@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.7](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.6...v2.2.7) (2021-04-05)
+
+
+### Bug Fixes
+
+* correct current position for when blind is above 100 threshold, fixes [#66](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/66) ([de3142a](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/de3142a7c9983f4890c753b9916a77c40a2e3baa))
+
 ### [2.2.6](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.5...v2.2.6) (2021-04-02)
 
 ### [2.2.5](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.4...v2.2.5) (2021-04-02)
