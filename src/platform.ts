@@ -10,6 +10,9 @@ import {
   Characteristic,
 } from 'homebridge';
 import {
+  get,
+} from 'lodash';
+import {
   PLATFORM_NAME,
   PLUGIN_NAME,
   MYSMARTBLINDS_DOMAIN,
@@ -158,7 +161,12 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
                 this.requestOptions,
                 { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
               )).then((response) => {
-                const blindState = response.data.blindsState[0];
+                const blindState = get(response, 'data.blindsState[0]', { position: 0, batteryLevel: 0 });
+
+                if (blindState.batteryLevel <= 0) {
+                  this.log.error(`${blindName} state fetch failed.  Do you have the Hardware bridge? Is the battery charged?`);
+                }
+
                 const homeKitBlindPosition = this.convertPosition(blindState.position);
                 accessory.context.blind = {
                   name: blindName,
