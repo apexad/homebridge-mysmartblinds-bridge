@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.9](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.8...v2.2.9) (2021-04-07)
+
+
+### Bug Fixes
+
+* do not let -1 batteryLevel happen, fixes [#66](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/66) ([33e37fc](https://github.com/apexad/homebridge-mysmartblinds-bridge/commit/33e37fc63866b3c8f75c17918daa22c4e7f8fa37))
+
 ### [2.2.8](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.7...v2.2.8) (2021-04-05)
 
 
