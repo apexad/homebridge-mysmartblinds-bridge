@@ -87,7 +87,7 @@ export class MySmartBlindsAccessory {
     } = this.platform.Characteristic;
     // value of -1 means data was not sent correctly, so ignore it for now
 
-    this.batteryService.updateCharacteristic(this.platform.Characteristic.BatteryLevel, batteryLevel);
+    this.batteryService.updateCharacteristic(this.platform.Characteristic.BatteryLevel, batteryLevel < 0 ? 0 : batteryLevel);
     this.batteryService
       .updateCharacteristic(
         StatusLowBattery,
