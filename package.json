@@ -15,7 +15,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "prompt": "^1.0.0",
     "request": "^2.88.2",
