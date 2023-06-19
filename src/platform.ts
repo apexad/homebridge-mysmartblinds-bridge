@@ -97,11 +97,11 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   refreshAuthToken() {
     return rp({
       method: 'POST',
-      uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/ro`,
+      uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/token`,
       json: true,
       body: Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
     }).then((response) => {
-      this.authToken = response.id_token;
+      this.authToken = response.idToken;
       this.requestOptions = {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,

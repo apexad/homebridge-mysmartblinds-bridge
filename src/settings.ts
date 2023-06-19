@@ -6,11 +6,11 @@ export const PLUGIN_NAME = 'homebridge-mysmartblinds-bridge';
 export const MYSMARTBLINDS_DOMAIN = 'mysmartblinds.auth0.com';
 
 export const MYSMARTBLINDS_OPTIONS = {
-  scope: 'openid offline_access',
-  grant_type: 'password',
+  scope: 'openid email offline_access',
+  grant_type: 'http://auth0.com/oauth/grant-type/password-realm',
   client_id: '1d1c3vuqWtpUt1U577QX5gzCJZzm8WOB',
-  connection: 'Username-Password-Authentication',
-  device: 'MySmartBlinds Homebridge',
+  realm: 'Username-Password-Authentication',
+  audience: '',
 };
 
 export const MYSMARTBLINDS_HEADERS = {
