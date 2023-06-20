@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.9...v3.0.1) (2023-06-20)
+
 ### [2.2.9](https://github.com/apexad/homebridge-mysmartblinds-bridge/compare/v2.2.8...v2.2.9) (2021-04-07)
 
 
