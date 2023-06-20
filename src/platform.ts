@@ -78,7 +78,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         password: this.config.password,
       };
     } catch(err) {
-      this.log.error(err);
+      this.log.error(err as string);
     }
 
     this.log.debug('Finished initializing platform:', this.config.name);
