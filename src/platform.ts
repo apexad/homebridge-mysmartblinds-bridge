@@ -78,7 +78,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
         password: this.config.password,
       };
     } catch(err) {
-      this.log.error(err);
+      this.log.error(err as string);
     }
 
     this.log.debug('Finished initializing platform:', this.config.name);
@@ -97,11 +97,11 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
   refreshAuthToken() {
     return rp({
       method: 'POST',
-      uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/ro`,
+      uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/token`,
       json: true,
       body: Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
     }).then((response) => {
-      this.authToken = response.id_token;
+      this.authToken = response.access_token;
       this.requestOptions = {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,
