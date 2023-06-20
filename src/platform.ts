@@ -101,7 +101,7 @@ export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
       json: true,
       body: Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
     }).then((response) => {
-      this.authToken = response.idToken;
+      this.authToken = response.accessToken;
       this.requestOptions = {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,
