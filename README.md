@@ -58,11 +58,6 @@ Field                   | Description
 ## Testing
 Use `npx homebridge-mysmartblinds-bridge` to test your credentials.
 
-## Sponsors
-mrferreira89 (reddit user) - primary tester/sponsor and provided project hardware  
-[gregmichael](https://github.com/gregmichael) - sponsor and tester  
-[name99-org](https://github.com/name99-org) - sponsor
-
 ## Code credits
 [ianlevesque/smartblinds-client](https://github.com/ianlevesque/smartblinds-client) - used to understand mysmartblinds bridge API  
 [Nicnl/homebridge-minimal-http-blinds](https://github.com/Nicnl/homebridge-minimal-http-blinds) - used as an example of blind accessory  
