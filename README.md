@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://github.com/homebridge/homebridge/wiki/Verified-Plugins#verified-plugins"><img alt="Homebridge Verified" src="https://raw.githubusercontent.com/apexad/homebridge-mysmartblinds-bridge/master/branding/Homebridge_x_MySmartBlinds.png" width="500px"></a>
+  <a href="https://github.com/homebridge/homebridge/wiki/Verified-Plugins#verified-plugins"><img alt="Homebridge Verified" src="https://raw.githubusercontent.com/homebridge-plugins/homebridge-mysmartblinds-bridge/master/branding/Homebridge_x_MySmartBlinds.png" width="500px"></a>
 </p>
 
 # homebridge-mysmartblinds-bridge
-[![mit license](https://badgen.net/badge/license/MIT/red)](https://github.com/apexad/homebridge-mysmartblinds-bridge/blob/master/LICENSE)
+[![mit license](https://badgen.net/badge/license/MIT/red)](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/blob/master/LICENSE)
 [![npm](https://badgen.net/npm/v/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![npm](https://badgen.net/npm/dt/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
@@ -27,7 +27,7 @@ This plugin is not affiliated with the MySmartBlinds product.
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
 2. If switching to `closeUp` it's best to Open all blinds first and then restart Homebridge
-3. If you see duplicate blinds, make sure to delete any 'disconnected'/invalid blinds within the iOS/Android app. (see [#23](https://github.com/apexad/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
+3. If you see duplicate blinds, make sure to delete any 'disconnected'/invalid blinds within the iOS/Android app. (see [#23](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/issues/23#issuecomment-725165376))
 4. Polling Interval will be ignored if the (auth0) API [Rate Limit Policy](https://auth0.com/docs/policies/rate-limit-policy) is reached
 
 ## Configuration

@@ -49,10 +49,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/apexad/homebridge-mysmartblinds-bridge.git"
+    "url": "git://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge.git"
   },
   "bugs": {
-    "url": "https://github.com/apexad/homebridge-mysmartblinds-bridge/issues"
+    "url": "https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/issues"
   },
   "main": "dist/index.js",
   "bin": {
