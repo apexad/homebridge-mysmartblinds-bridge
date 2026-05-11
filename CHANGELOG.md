@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changes
 
 * Add GitHub Actions release workflow for beta/alpha/latest npm publishes
+* Polish README wording and reformat the config table
 
 
 ## [3.0.1](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.9...v3.0.1) (2023-06-20)

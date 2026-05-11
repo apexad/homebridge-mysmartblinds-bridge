@@ -10,19 +10,19 @@
 [![donate](https://badgen.net/badge/donate/paypal/91BE09)](https://www.paypal.me/apexadm)
 
 
-[Homebridge](https://github.com/homebridge/homebridge) plugin which communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.tiltsmarthome.com/products/smart-hub?variant=31506970148929).  
-Configure your blinds and bridge with the official iOS or Android app first in order to use this Homebridge plugin.
+[Homebridge](https://github.com/homebridge/homebridge) plugin that communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.tiltsmarthome.com/products/smart-hub?variant=31506970148929).  
+Configure your blinds and bridge with the official iOS or Android app first to use this Homebridge plugin.
 
 This plugin is not affiliated with the MySmartBlinds product.
 
 ## Features
 1. Uses bridge to auto-detect all blinds setup in the MySmartBlinds app, no need to specify each blind
 2. Supports blind percentages
-3. Shows battery level for each blind (updated only when blind is open/closed)
-4. Issues a low battery indicator if battery is below 20%
+3. Shows battery level for each blind (updated only when the blind is open/closed)
+4. Issues a low-battery indicator if the battery is below 20%
 5. Logging (via Homebridge) of all actions done
-6. Blinds can close down or up (via config option)
-7. Polling so that blinds update if changed outside of HomeKit
+6. Blinds can close down or up (via a config option)
+7. Polling so that blinds update if changed outside HomeKit
 
 ## Notes
 1. Use the 'MySmartBlinds' app to calibrate a blind if it is not opening perfectly straight
@@ -44,16 +44,16 @@ To configure manually, add to the `platforms` section of Homebridge's `config.js
 }
 ```
 
-Field                   | Description
-------------------------|------------
-**platform**            | Must always be "MySmartBlindsBridge"
-**name**                | Best to set to "MySmartBlindsBridge"
-**username**            | MySmartBlinds app username (usually email address)
-**password**            | MySmartBlinds app password
-**closeUp**             | _(optional true/false, defaults to false)_ Blinds close in the upwards position
-**statusLog**           | _(optional true/false, defaults to false)_ logs position changes
-**allowDebug**          | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout
-**pollingInterval**     | _(optional)_ Polling Interval (in minutes)
+| Field               | Description                                                                      |
+|---------------------|----------------------------------------------------------------------------------|
+| **platform**        | Must always be "MySmartBlindsBridge"                                             |
+| **name**            | Best to set to "MySmartBlindsBridge"                                             |
+| **username**        | MySmartBlinds app username (usually email address)                               |
+| **password**        | MySmartBlinds app password                                                       |
+| **closeUp**         | _(optional true/false, defaults to false)_ Blinds close in the upwards position  |
+| **statusLog**       | _(optional true/false, defaults to false)_ logs position changes                 |
+| **allowDebug**      | _(optional true/false, defaults to false)_ Outputs a lot of debug info to stdout |
+| **pollingInterval** | _(optional)_ Polling Interval (in minutes)                                       |
 
 ## Testing
 Use `npx homebridge-mysmartblinds-bridge` to test your credentials.
