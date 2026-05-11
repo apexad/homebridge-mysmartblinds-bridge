@@ -1,200 +1,210 @@
-import rp from 'request-promise';
-import jwt from 'jsonwebtoken';
-import {
+/* global NodeJS */
+
+import type {
   API,
+  Characteristic,
   DynamicPlatformPlugin,
   Logger,
   PlatformAccessory,
   PlatformConfig,
   Service,
-  Characteristic,
-} from 'homebridge';
-import {
-  get,
-} from 'lodash';
-import {
-  PLATFORM_NAME,
-  PLUGIN_NAME,
-  MYSMARTBLINDS_DOMAIN,
-  MYSMARTBLINDS_OPTIONS,
-  MYSMARTBLINDS_HEADERS,
-  MYSMARTBLINDS_GRAPHQL,
-  MYSMARTBLINDS_QUERIES,
-} from './settings';
-import {
-  MySmartBlindsConfig,
+} from 'homebridge'
+
+import type {
   MySmartBlindsAuth,
   MySmartBlindsBlind,
-} from './config';
-import { MySmartBlindsAccessory } from './platformAccessory';
+  MySmartBlindsConfig,
+} from './config.js'
+
+import jwt from 'jsonwebtoken'
+import { get } from 'lodash-es'
+
+import { MySmartBlindsAccessory } from './platformAccessory.js'
+import { request } from './request.js'
+import {
+  MYSMARTBLINDS_DOMAIN,
+  MYSMARTBLINDS_GRAPHQL,
+  MYSMARTBLINDS_HEADERS,
+  MYSMARTBLINDS_OPTIONS,
+  MYSMARTBLINDS_QUERIES,
+  PLATFORM_NAME,
+  PLUGIN_NAME,
+} from './settings.js'
 
 export class MySmartBlindsBridgePlatform implements DynamicPlatformPlugin {
-  public readonly Service: typeof Service = this.api.hap.Service;
-  public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
-  public readonly accessories: PlatformAccessory[] = [];
-  auth!: MySmartBlindsAuth;
-  authToken!: string | undefined;
-  authTokenInterval?: NodeJS.Timeout;
+  public readonly Service: typeof Service
+  public readonly Characteristic: typeof Characteristic
+  public readonly accessories: PlatformAccessory[] = []
+  auth!: MySmartBlindsAuth
+  authToken!: string | undefined
+  authTokenInterval?: NodeJS.Timeout
   requestOptions!: {
-    method: string;
-    uri: string;
-    body?: {
-      query: string;
-      variables: {
-        position: string;
-        blinds: string;
-      };
-    };
-    json: boolean;
-    headers: {
-      Authorization: string;
-    };
-  };
-  
+    method: string
+    uri: string
+    headers: Record<string, string>
+  }
+
   constructor(
     public readonly log: Logger,
     public readonly config: PlatformConfig & MySmartBlindsConfig,
     public readonly api: API,
   ) {
+    this.Service = this.api.hap.Service
+    this.Characteristic = this.api.hap.Characteristic
+
     /* plugin not configured check */
     if (!config) {
-      this.log.info('No configuration found for platform ', PLATFORM_NAME);
-      return;
+      this.log.info('No configuration found for platform ', PLATFORM_NAME)
+      return
     }
 
     /* setup config */
-    this.config = config;
-    this.log = log;
+    this.config = config
+    this.log = log
 
     try {
       if (!this.config.username) {
-        throw new Error('MySmartBlinds Bridge - You must provide a username');
+        throw new Error('MySmartBlinds Bridge - You must provide a username')
       }
       if (!this.config.password) {
-        throw new Error('MySmartBlinds Bridge - You must provide a password');
+        throw new Error('MySmartBlinds Bridge - You must provide a password')
       }
       this.auth = {
         username: this.config.username,
         password: this.config.password,
-      };
-    } catch(err) {
-      this.log.error(err as string);
+      }
+    } catch (err) {
+      this.log.error(err as string)
     }
 
-    this.log.debug('Finished initializing platform:', this.config.name);
+    this.log.debug('Finished initializing platform:', this.config.name)
 
     this.api.on('didFinishLaunching', () => {
-      this.log.debug('Executed didFinishLaunching callback');
-      this.discoverDevices();
-    });
+      this.log.debug('Executed didFinishLaunching callback')
+      this.discoverDevices()
+    })
   }
 
   configureAccessory(accessory: PlatformAccessory) {
-    this.log.info('Loading blind from cache:', accessory.displayName);
-    this.accessories.push(accessory);
+    this.log.info('Loading blind from cache:', accessory.displayName)
+    this.accessories.push(accessory)
   }
 
   refreshAuthToken() {
-    return rp({
+    return request<{ access_token: string, id_token?: string }>({
       method: 'POST',
       uri: `https://${MYSMARTBLINDS_DOMAIN}/oauth/token`,
-      json: true,
       body: Object.assign({}, MYSMARTBLINDS_OPTIONS, this.auth),
-    }).then((response) => {
-      this.authToken = response.access_token;
+    }).then(({ body }) => {
+      this.authToken = body.access_token
       this.requestOptions = {
         method: 'POST',
         uri: MYSMARTBLINDS_GRAPHQL,
-        json: true,
         headers: Object.assign({}, MYSMARTBLINDS_HEADERS, { Authorization: `Bearer ${this.authToken}` }),
-      };
+      }
 
       if (this.config.allowDebug) {
-        const authTokenExpireDate = new Date((jwt.decode(response.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000).toISOString();
-        this.log.info(`authToken refresh, now expires ${authTokenExpireDate}`);
+        const authTokenExpireDate = new Date((jwt.decode(body.id_token || '{ exp: 0 }') as { exp: number }).exp * 1000).toISOString()
+        this.log.info(`authToken refresh, now expires ${authTokenExpireDate}`)
       }
-    });
+    })
   }
 
   convertPosition(blindPosition: string) {
-    let convertedPosition = parseInt(blindPosition);
+    let convertedPosition = Number.parseInt(blindPosition)
 
     if (this.config.closeUp && convertedPosition > 100) {
-      convertedPosition = Math.abs(convertedPosition - 200);
+      convertedPosition = Math.abs(convertedPosition - 200)
     }
-    return convertedPosition;
+    return convertedPosition
   }
 
   discoverDevices() {
     this.refreshAuthToken().then(() => {
-      this.authTokenInterval = setInterval(this.refreshAuthToken.bind(this), 1000 * 60 * 60 * 8);
-      rp(Object.assign({}, this.requestOptions, { body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null } }))
-        .then((response) => {
+      this.authTokenInterval = setInterval(() => {
+        this.refreshAuthToken().catch(err =>
+          this.log.error('MySmartBlinds auth token refresh failed:', err?.message ?? err),
+        )
+      }, 1000 * 60 * 60 * 8)
+      request<{ data: { user: { rooms: Array<{ id: number, name: string }>, blinds: MySmartBlindsBlind[] } } }>({
+        ...this.requestOptions,
+        body: { query: MYSMARTBLINDS_QUERIES.GetUserInfo, variables: null },
+      })
+        .then(({ body: response }) => {
           if (this.config.allowDebug) {
-            this.log.debug('GetUserInfo', response.data.user);
+            this.log.debug('GetUserInfo', response.data.user)
           }
           const {
             rooms,
             blinds,
-          } = response.data.user;
+          } = response.data.user
 
-          const activeBlinds = blinds.filter((blind: MySmartBlindsBlind) => !blind.deleted);
-          const deletedBlinds = blinds.filter((blind: MySmartBlindsBlind) => blind.deleted);
+          const activeBlinds = blinds.filter((blind: MySmartBlindsBlind) => !blind.deleted)
+          const deletedBlinds = blinds.filter((blind: MySmartBlindsBlind) => blind.deleted)
 
           activeBlinds.forEach((blind: MySmartBlindsBlind) => {
-            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress);
-            const blindName = `${rooms.find((room: { id: number }) => room.id === blind.roomId).name} ${blind.name}`;
+            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress)
+            const blindName = `${rooms.find(room => room.id === blind.roomId)?.name ?? 'Unknown'} ${blind.name}`
 
-            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
+            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
             if (existingAccessory) {
-              this.log.debug('Restore cached blind:', blindName);
-              new MySmartBlindsAccessory(this, existingAccessory);
-              this.api.updatePlatformAccessories([existingAccessory]);
+              this.log.debug('Restore cached blind:', blindName)
+              // eslint-disable-next-line no-new
+              new MySmartBlindsAccessory(this, existingAccessory)
+              this.api.updatePlatformAccessories([existingAccessory])
             } else {
             // the accessory does not yet exist, so we need to create it
-              this.log.info('Adding new blind:', blindName);
-        
+              this.log.info('Adding new blind:', blindName)
+
               // create a new accessory
-              const accessory = new this.api.platformAccessory(blindName, uuid);
-              rp(Object.assign(
-                {},
-                this.requestOptions,
-                { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } } },
-              )).then((response) => {
-                const blindState = get(response, 'data.blindsState[0]', { position: 0, batteryLevel: 0 });
+              const accessory = new this.api.platformAccessory(blindName, uuid)
+              request({
+                ...this.requestOptions,
+                body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: blind.encodedMacAddress } },
+              }).then(({ body: response }) => {
+                const blindState = get(response, 'data.blindsState[0]', { position: '0', batteryLevel: 0 })
 
                 if (blindState.batteryLevel <= 0) {
-                  this.log.error(`${blindName} state fetch failed.  Do you have the Hardware bridge? Is the battery charged?`);
+                  this.log.error(`${blindName} state fetch failed.  Do you have the Hardware bridge? Is the battery charged?`)
                 }
 
-                const homeKitBlindPosition = this.convertPosition(blindState.position);
+                const homeKitBlindPosition = this.convertPosition(blindState.position)
                 accessory.context.blind = {
                   name: blindName,
                   macAddress: blind.encodedMacAddress,
                   blindPosition: homeKitBlindPosition,
                   batteryLevel: blindState.batteryLevel as number,
-                };
-        
-                new MySmartBlindsAccessory(this, accessory);
-        
-                this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
-              }).catch((error) => this.log.error(error));
+                }
+
+                // eslint-disable-next-line no-new
+                new MySmartBlindsAccessory(this, accessory)
+
+                this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory])
+              }).catch(error => this.log.error(error))
             }
-          });
+          })
           deletedBlinds.forEach((blind) => {
-            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress);
-            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
+            const uuid = this.api.hap.uuid.generate(blind.encodedMacAddress)
+            const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
             const inActive = activeBlinds.findIndex(
               (activeBlind: MySmartBlindsBlind) => blind.encodedMacAddress === activeBlind.encodedMacAddress,
-            ) > -1;
+            ) > -1
 
             if (existingAccessory && !inActive) {
-              this.accessories.splice(this.accessories.findIndex(acc => acc.UUID === existingAccessory.UUID), 1);
-              this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory]);
-              this.log.info('Deleted blind from cache:', existingAccessory.displayName);
+              this.accessories.splice(this.accessories.findIndex(acc => acc.UUID === existingAccessory.UUID), 1)
+              this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [existingAccessory])
+              this.log.info('Deleted blind from cache:', existingAccessory.displayName)
             }
-          });
-        });
-    });
+          })
+        })
+        .catch(err => this.log.error('MySmartBlinds GetUserInfo failed:', err?.message ?? err))
+    }).catch((err) => {
+      const status = (err as { statusCode?: number })?.statusCode
+      if (status === 401 || status === 403) {
+        this.log.error('MySmartBlinds authentication failed — check your username and password in the plugin config.')
+      } else {
+        this.log.error('MySmartBlinds authentication failed:', err?.message ?? err)
+      }
+    })
   }
 }

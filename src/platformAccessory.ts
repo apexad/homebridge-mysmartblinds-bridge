@@ -1,151 +1,151 @@
-import {
-  Service,
-  PlatformAccessory,
-  CharacteristicValue,
+import type {
   CharacteristicSetCallback,
-} from 'homebridge';
-import rp from 'request-promise';
-import { MySmartBlindsBridgePlatform } from './platform';
-import { MYSMARTBLINDS_QUERIES } from './settings';
+  CharacteristicValue,
+  PlatformAccessory,
+  Service,
+} from 'homebridge'
+
+import type { MySmartBlindsBridgePlatform } from './platform.js'
+
+import { request } from './request.js'
+import { MYSMARTBLINDS_QUERIES } from './settings.js'
 
 export class MySmartBlindsAccessory {
-  service!: Service;
-  batteryService: Service;
-  statusLog: boolean;
-  pollingInterval: number;
-  name: string;
-  closeUp: boolean;
-  macAddress: string;
-  platform: MySmartBlindsBridgePlatform;
-  accessory: PlatformAccessory;
-  allowDebug: boolean;
+  service!: Service
+  batteryService: Service
+  statusLog: boolean
+  pollingInterval: number
+  name: string
+  closeUp: boolean
+  macAddress: string
+  platform: MySmartBlindsBridgePlatform
+  accessory: PlatformAccessory
+  allowDebug: boolean
 
   constructor(
     platform: MySmartBlindsBridgePlatform,
     accessory: PlatformAccessory,
   ) {
-    this.platform = platform;
-    this.name = accessory.context.blind.name;
-    this.macAddress = accessory.context.blind.macAddress;
-    this.statusLog = platform.config.statusLog || false;
-    this.closeUp = platform.config.closeUp || false;
-    this.pollingInterval = platform.config.pollingInterval || 0;
-    this.allowDebug = platform.config.allowDebug || false;
+    this.platform = platform
+    this.name = accessory.context.blind.name
+    this.macAddress = accessory.context.blind.macAddress
+    this.statusLog = platform.config.statusLog || false
+    this.closeUp = platform.config.closeUp || false
+    this.pollingInterval = platform.config.pollingInterval || 0
+    this.allowDebug = platform.config.allowDebug || false
 
     accessory.getService(this.platform.Service.AccessoryInformation)!
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'MySmartBlinds')
       .setCharacteristic(this.platform.Characteristic.Model, 'Blind')
-      .setCharacteristic(this.platform.Characteristic.SerialNumber, this.macAddress);
+      .setCharacteristic(this.platform.Characteristic.SerialNumber, this.macAddress)
 
-    this.service = accessory.getService(this.platform.Service.WindowCovering) || accessory.addService(this.platform.Service.WindowCovering);
+    this.service = accessory.getService(this.platform.Service.WindowCovering) || accessory.addService(this.platform.Service.WindowCovering)
 
-    this.service.setCharacteristic(this.platform.Characteristic.Name, this.name);
+    this.service.setCharacteristic(this.platform.Characteristic.Name, this.name)
 
     this.service.getCharacteristic(this.platform.Characteristic.TargetPosition)
-      .on('set', this.setTargetPosition.bind(this));
-    this.updatePosition(accessory.context.blind.blindPosition);
+      .on('set', this.setTargetPosition.bind(this))
+    this.updatePosition(accessory.context.blind.blindPosition)
 
-    this.batteryService = accessory.getService(this.platform.Service.BatteryService)
-    || accessory.addService(this.platform.Service.BatteryService, `${this.name} Battery`, `${this.macAddress} Battery`);
-    this.updateBattery(accessory.context.blind.batteryLevel);
-    
-    this.accessory = accessory;
+    this.batteryService = accessory.getService(this.platform.Service.Battery)
+      || accessory.addService(this.platform.Service.Battery, `${this.name} Battery`, `${this.macAddress} Battery`)
+    this.updateBattery(accessory.context.blind.batteryLevel)
+
+    this.accessory = accessory
 
     if (this.pollingInterval > 0) {
       if (this.allowDebug) {
-        this.platform.log.info(`Begin polling for ${this.name}`);
+        this.platform.log.info(`Begin polling for ${this.name}`)
       }
-      setTimeout(() => this.refreshBlind(), this.pollingInterval * 1000 * 60);
+      setTimeout(() => this.refreshBlind(), this.pollingInterval * 1000 * 60)
     }
   }
 
   updatePosition(currentPosition: number) {
-    let reportCurrentPosition = currentPosition;
+    let reportCurrentPosition = currentPosition
 
-    /* eslint-disable brace-style */
-    // fix for blinds opned with finger via app
-    if (reportCurrentPosition === 99) { reportCurrentPosition = 100; }
-
-    // fix for blinds closed wth finger via app (1) or error (-1)
-    if (reportCurrentPosition === 1 || reportCurrentPosition === -1) { reportCurrentPosition = 0; }
-    // fix for MySmartBlinds being range 0 to 200 and Homebridge 0 to 100
-    if (reportCurrentPosition > 100) { reportCurrentPosition = Math.abs(reportCurrentPosition - 200); }
-    /* eslint-enable brace-style */
-
-    if (this.statusLog) {
-      this.platform.log.info(`STATUS: ${this.name} updateCurrentPosition : ${reportCurrentPosition} (Actual ${currentPosition})`);
+    // fix for blinds opened with finger via app
+    if (reportCurrentPosition === 99) {
+      reportCurrentPosition = 100
     }
 
-    this.service.updateCharacteristic(this.platform.Characteristic.TargetPosition, reportCurrentPosition);
-    this.service.updateCharacteristic(this.platform.Characteristic.CurrentPosition, reportCurrentPosition);
-    this.service.updateCharacteristic(this.platform.Characteristic.PositionState, this.platform.Characteristic.PositionState.STOPPED);
+    // fix for blinds closed with finger via app (1) or error (-1)
+    if (reportCurrentPosition === 1 || reportCurrentPosition === -1) {
+      reportCurrentPosition = 0
+    }
+    // fix for MySmartBlinds being range 0 to 200 and Homebridge 0 to 100
+    if (reportCurrentPosition > 100) {
+      reportCurrentPosition = Math.abs(reportCurrentPosition - 200)
+    }
+
+    if (this.statusLog) {
+      this.platform.log.info(`STATUS: ${this.name} updateCurrentPosition : ${reportCurrentPosition} (Actual ${currentPosition})`)
+    }
+
+    this.service.updateCharacteristic(this.platform.Characteristic.TargetPosition, reportCurrentPosition)
+    this.service.updateCharacteristic(this.platform.Characteristic.CurrentPosition, reportCurrentPosition)
+    this.service.updateCharacteristic(this.platform.Characteristic.PositionState, this.platform.Characteristic.PositionState.STOPPED)
   }
 
   updateBattery(batteryLevel: number) {
-    const {
-      StatusLowBattery,
-    } = this.platform.Characteristic;
+    const { StatusLowBattery } = this.platform.Characteristic
     // value of -1 means data was not sent correctly, so ignore it for now
 
-    this.batteryService.updateCharacteristic(this.platform.Characteristic.BatteryLevel, batteryLevel < 0 ? 0 : batteryLevel);
+    this.batteryService.updateCharacteristic(this.platform.Characteristic.BatteryLevel, batteryLevel < 0 ? 0 : batteryLevel)
     this.batteryService
       .updateCharacteristic(
         StatusLowBattery,
         (batteryLevel < 20 && batteryLevel !== -1) ? StatusLowBattery.BATTERY_LEVEL_LOW : StatusLowBattery.BATTERY_LEVEL_NORMAL,
-      );
+      )
   }
 
   setTargetPosition(value: CharacteristicValue, callback: CharacteristicSetCallback) {
-    const targetPosition = value as number;
-    this.service.updateCharacteristic(this.platform.Characteristic.TargetPosition, targetPosition);
+    const targetPosition = value as number
+    this.service.updateCharacteristic(this.platform.Characteristic.TargetPosition, targetPosition)
 
-    this.platform.log.info(`${this.name} setTargetPosition to ${value}`);
+    this.platform.log.info(`${this.name} setTargetPosition to ${value}`)
 
-    rp(Object.assign(
-      {},
-      this.platform.requestOptions,
-      {
-        body: {
-          query: MYSMARTBLINDS_QUERIES.UpdateBlindsPosition,
-          variables: { position: this.closeUp ? (Math.abs(targetPosition - 200)) : targetPosition, blinds: this.macAddress },
-        },
-        resolveWithFullResponse: true,
+    request<{ data: { updateBlindsPosition: Array<{ batteryLevel: number }> } }>({
+      ...this.platform.requestOptions,
+      body: {
+        query: MYSMARTBLINDS_QUERIES.UpdateBlindsPosition,
+        variables: { position: this.closeUp ? (Math.abs(targetPosition - 200)) : targetPosition, blinds: this.macAddress },
       },
-    ))
-      .then((response) => {
+    })
+      .then(({ body }) => {
         // update battery level since we just ran the motor a bit
-        this.updateBattery(response.body.data.updateBlindsPosition[0].batteryLevel as number);
+        this.updateBattery(body.data.updateBlindsPosition[0].batteryLevel)
 
         // update current position
-        this.updatePosition(targetPosition);
-        
-        this.platform.log.info(`${this.name} currentPosition is now ${targetPosition}`);
-        callback(null);
+        this.updatePosition(targetPosition)
+
+        this.platform.log.info(`${this.name} currentPosition is now ${targetPosition}`)
+        callback(null)
       })
       .catch((err) => {
-        this.platform.log.error(`${this.name} setTargetPosition ERROR`, err.statusCode);
-        callback(null);
-      });
+        this.platform.log.error(`${this.name} setTargetPosition ERROR`, err.statusCode)
+        callback(null)
+      })
   }
 
   refreshBlind() {
     if (this.allowDebug) {
-      this.platform.log.info(`Refresh blind ${this.name}`);
+      this.platform.log.info(`Refresh blind ${this.name}`)
     }
-    rp(Object.assign(
-      {},
-      this.platform.requestOptions,
-      { body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: this.macAddress } }, resolveWithFullResponse: true },
-    )).then((response) => {
-      const blindState = response.body.data.blindsState[0];
-      this.updatePosition(this.platform.convertPosition(blindState.position));
-      this.updateBattery(blindState.batteryLevel as number);
-      let refreshBlindTimeOut = this.pollingInterval * 1000 * 60; // convert minutes to milliseconds
-      if (response.headers['x-ratelimit-reset']) {
-        refreshBlindTimeOut = new Date(parseInt(response.headers['x-ratelimit-reset']) * 1000).getTime() - new Date().getTime();
-        this.platform.log.warn(`Rate Limit reached, refresh for ${this.name} delay to ${new Date(response.headers['x-ratelimit-reset'])}`);
+    request<{ data: { blindsState: Array<{ position: string, batteryLevel: number }> } }>({
+      ...this.platform.requestOptions,
+      body: { query: MYSMARTBLINDS_QUERIES.GetBlindSate, variables: { blinds: this.macAddress } },
+    }).then(({ body, headers }) => {
+      const blindState = body.data.blindsState[0]
+      this.updatePosition(this.platform.convertPosition(blindState.position))
+      this.updateBattery(blindState.batteryLevel)
+      let refreshBlindTimeOut = this.pollingInterval * 1000 * 60 // convert minutes to milliseconds
+      const rateLimitReset = headers.get('x-ratelimit-reset')
+      if (rateLimitReset) {
+        refreshBlindTimeOut = new Date(Number.parseInt(rateLimitReset) * 1000).getTime() - Date.now()
+        this.platform.log.warn(`Rate Limit reached, refresh for ${this.name} delay to ${new Date(Number.parseInt(rateLimitReset) * 1000)}`)
       }
-      setTimeout(() => this.refreshBlind(), refreshBlindTimeOut);
-    }).catch((err) => this.platform.log.error(`${this.name} refreshBlind ERROR`, err.statusCode));
+      setTimeout(() => this.refreshBlind(), refreshBlindTimeOut)
+    }).catch(err => this.platform.log.error(`${this.name} refreshBlind ERROR`, err.statusCode))
   }
 }

@@ -1,9 +1,9 @@
-/* Plugin Infrmation */
-export const PLATFORM_NAME = 'MySmartBlindsBridge';
-export const PLUGIN_NAME = 'homebridge-mysmartblinds-bridge';
+/* Plugin Information */
+export const PLATFORM_NAME = 'MySmartBlindsBridge'
+export const PLUGIN_NAME = 'homebridge-mysmartblinds-bridge'
 
 /* MySmartBlinds App Settings */
-export const MYSMARTBLINDS_DOMAIN = 'mysmartblinds.auth0.com';
+export const MYSMARTBLINDS_DOMAIN = 'mysmartblinds.auth0.com'
 
 export const MYSMARTBLINDS_OPTIONS = {
   scope: 'openid email offline_access',
@@ -11,16 +11,14 @@ export const MYSMARTBLINDS_OPTIONS = {
   client_id: '1d1c3vuqWtpUt1U577QX5gzCJZzm8WOB',
   realm: 'Username-Password-Authentication',
   audience: '',
-};
+}
 
-export const MYSMARTBLINDS_HEADERS = {
-  headers: {
-    'User-Agent': 'MySmartBlinds/2.3.3 (iPhone; iOS 14.2; Scale/2.00',
-    'auth0-client-id': MYSMARTBLINDS_OPTIONS.client_id,
-  },
-};
+export const MYSMARTBLINDS_HEADERS: Record<string, string> = {
+  'User-Agent': 'MySmartBlinds/2.3.3 (iPhone; iOS 14.2; Scale/2.00',
+  'auth0-client-id': MYSMARTBLINDS_OPTIONS.client_id,
+}
 
-export const MYSMARTBLINDS_GRAPHQL = 'https://api.mysmartblinds.com/v1/graphql';
+export const MYSMARTBLINDS_GRAPHQL = 'https://api.mysmartblinds.com/v1/graphql'
 
 /* MySmartBlinds Queries */
 export const MYSMARTBLINDS_QUERIES = {
@@ -62,4 +60,4 @@ export const MYSMARTBLINDS_QUERIES = {
       }
     }
   `,
-};
+}

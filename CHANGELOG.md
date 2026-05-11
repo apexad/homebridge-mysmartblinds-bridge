@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * Add GitHub Actions release workflow for beta/alpha/latest npm publishes
 * Polish README wording and reformat the config table
 * Modernize build toolchain — ESM modules, ES2022 target, and @antfu/eslint-config
+* Replace deprecated `request-promise` with native `fetch` via a small request helper
 
 
 ## [3.0.1](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.9...v3.0.1) (2023-06-20)
