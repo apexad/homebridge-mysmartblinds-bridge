@@ -1,33 +1,38 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file.
 
-### [3.0.1](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.9...v3.0.1) (2023-06-20)
+## [4.0.0](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v3.0.1...v4.0.0) (2023-06-20)
 
-### [2.2.9](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.8...v2.2.9) (2021-04-07)
+### Changes
 
+* Add GitHub Actions release workflow for beta/alpha/latest npm publishes
+
+
+## [3.0.1](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.9...v3.0.1) (2023-06-20)
+
+## [2.2.9](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.8...v2.2.9) (2021-04-07)
 
 ### Bug Fixes
 
 * do not let -1 batteryLevel happen, fixes [#66](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/issues/66) ([33e37fc](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/commit/33e37fc63866b3c8f75c17918daa22c4e7f8fa37))
 
-### [2.2.8](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.7...v2.2.8) (2021-04-05)
-
+## [2.2.8](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.7...v2.2.8) (2021-04-05)
 
 ### Bug Fixes
 
 * failed blind state check/no battery now logs and does not crash, fixes [#56](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/issues/56) ([7b5ba35](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/commit/7b5ba35e06a0dea69146354015ab47f99e1cdcf2))
 
-### [2.2.7](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.6...v2.2.7) (2021-04-05)
+## [2.2.7](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.6...v2.2.7) (2021-04-05)
 
 
 ### Bug Fixes
 
 * correct current position for when blind is above 100 threshold, fixes [#66](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/issues/66) ([de3142a](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/commit/de3142a7c9983f4890c753b9916a77c40a2e3baa))
 
-### [2.2.6](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.5...v2.2.6) (2021-04-02)
+## [2.2.6](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.5...v2.2.6) (2021-04-02)
 
-### [2.2.5](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.4...v2.2.5) (2021-04-02)
+## [2.2.5](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.4...v2.2.5) (2021-04-02)
 
 
 ### Bug Fixes
@@ -35,9 +40,9 @@ All notable changes to this project will be documented in this file. See [standa
 * stop warning about current position being -1 ([afd31df](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/commit/afd31df1a901801eba677dd042e6738ed9760d12))
 * update dependencies ([da48799](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/commit/da48799d1e92e3d556a71af9a896dea20b95e2fe))
 
-### [2.2.4](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.3...v2.2.4) (2020-12-03)
+## [2.2.4](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.3...v2.2.4) (2020-12-03)
 
-### [2.2.3](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.2...v2.2.3) (2020-11-27)
+## [2.2.3](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v2.2.2...v2.2.3) (2020-11-27)
 
 
 ### Bug Fixes
