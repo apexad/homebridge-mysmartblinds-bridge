@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [4.0.0](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v3.0.1...v4.0.0) (2023-06-20)
+## [4.0.0](https://github.com/homebridge-plugins/homebridge-mysmartblinds-bridge/compare/v3.0.1...v4.0.0) (2026-05-12)
 
 ### Changes
 

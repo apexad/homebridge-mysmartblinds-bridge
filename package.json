@@ -2,7 +2,7 @@
   "name": "homebridge-mysmartblinds-bridge",
   "displayName": "Homebridge MySmartBlinds Bridge",
   "type": "module",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Homebridge plugin for mysmartblinds (using hardware bridge)",
   "author": {
     "name": "Alex 'apexad' Martin"
