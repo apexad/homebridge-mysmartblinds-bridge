@@ -7,8 +7,6 @@
 [![npm](https://badgen.net/npm/v/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![npm](https://badgen.net/npm/dt/homebridge-mysmartblinds-bridge)](https://www.npmjs.com/package/homebridge-mysmartblinds-bridge)
 [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
-[![donate](https://badgen.net/badge/donate/paypal/91BE09)](https://www.paypal.me/apexadm)
-
 
 [Homebridge](https://github.com/homebridge/homebridge) plugin that communicates with MySmartBlinds through the [MySmartBlinds Smart Bridge](https://www.tiltsmarthome.com/products/smart-hub?variant=31506970148929).  
 Configure your blinds and bridge with the official iOS or Android app first to use this Homebridge plugin.
